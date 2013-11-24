@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="companySetup"
+		transaction-type="RESOURCE_LOCAL">
+		
+	<!--	<class>deepshah.library.model.impl.JpaCompany</class>
+		<class>deepshah.library.model.impl.JpaDepartment</class> -->
+		<class>deepshah.library.model.impl.LibraryBranchImpl</class>
+		<class>deepshah.library.model.impl.BookCopiesImpl</class>
+		<class>deepshah.library.model.impl.BookLoansImpl</class>
+		<class>deepshah.library.model.impl.BookAuthorsImpl</class>
+		<class>deepshah.library.model.impl.BookImpl</class>
+		<class>deepshah.library.model.impl.BorrowerImpl</class>
+		<exclude-unlisted-classes />
+		<properties>
+		</properties>
+	</persistence-unit>
+</persistence>
+
