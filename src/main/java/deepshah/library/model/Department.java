@@ -1,6 +1,5 @@
 package deepshah.library.model;
 
-
 public interface Department {
 
 	public abstract Long getId();

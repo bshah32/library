@@ -1,11 +1,10 @@
 package deepshah.library.dao;
 
+import java.util.List;
 
 import deepshah.library.model.LibraryBranch;
 
 public interface LibraryBranchDAO {
-
-	public LibraryBranch find(int branch_id);
 
 	void insert(LibraryBranch branch);
 
@@ -15,7 +14,8 @@ public interface LibraryBranchDAO {
 
 	boolean isExist(int branchId);
 
-		
-	
+	public List<LibraryBranch> getAllBranches();
+
+	LibraryBranch find(int branch_id);
 
 }

@@ -14,5 +14,4 @@ public interface BookLoans {
 
 	public String getBook_id();
 
-	
 }

@@ -13,46 +13,43 @@ import javax.persistence.Table;
 
 import deepshah.library.model.BookLoans;
 
-
 @Entity
-@Table(name="book_loans")
-public class BookLoansImpl implements BookLoans,Serializable{
+@Table(name = "book_loans")
+public class BookLoansImpl implements BookLoans, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id 
-    @Column(name="book_id", nullable=false,length=15)
+	@Id
+	@Column(name = "book_id", nullable = false, length = 15)
 	private String book_id;
- 
-	@Id 
-    @Column(name="branch_id", nullable=false)
+
+	@Id
+	@Column(name = "branch_id", nullable = false)
 	private int branch_id = 0;
- 
-	@Id 
-    @Column(name="card_no", nullable=false,length=10)
+
+	@Id
+	@Column(name = "card_no", nullable = false, length = 10)
 	private String card_no;
- 
+
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="book_id",referencedColumnName = "book_id")
+	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookloans;
-	
-	
+
 	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="branch_id",referencedColumnName = "branch_id")
+	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl library_bookloans;
-	
-	
+
 	@ManyToOne(targetEntity = BorrowerImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="card_no", referencedColumnName = "card_no")
+	@JoinColumn(name = "card_no", referencedColumnName = "card_no")
 	private BorrowerImpl borrower_bookloans;
-	
-	@Column(name="date_out")
+
+	@Column(name = "date_out")
 	private Date date_out;
-	
-	@Column(name="due_date")
+
+	@Column(name = "due_date")
 	private Date due_date;
 
 	@Override
@@ -171,11 +168,5 @@ public class BookLoansImpl implements BookLoans,Serializable{
 	public BookLoansImpl() {
 		super();
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }

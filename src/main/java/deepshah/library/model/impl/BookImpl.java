@@ -12,52 +12,45 @@ import javax.persistence.Table;
 
 import deepshah.library.model.Book;
 
-
 @Entity
-@Table(name="book")
-@NamedQueries({
-	@NamedQuery(name="fetchAllBooksQuery",
-		query="SELECT b FROM BookImpl b")
-//	, 
-//	@NamedQuery(name="deleteBookByIdQuery",
-//		query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")	
+@Table(name = "book")
+@NamedQueries({ @NamedQuery(name = "fetchAllBooksQuery", query = "SELECT b FROM BookImpl b")
+// ,
+// @NamedQuery(name="deleteBookByIdQuery",
+// query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")
 })
+public class BookImpl implements Book {
 
-public class BookImpl implements Book{
-
-	
-	@Id 
-    @Column(name="book_id", nullable=false,length=15)
+	@Id
+	@Column(name = "book_id", nullable = false, length = 15)
 	private String book_id;
- 
-    @Column(name="title",length=100)
-    private String title;
 
-    @OneToMany(mappedBy= "book_id", targetEntity = BookAuthorsImpl.class)
+	@Column(name = "title", length = 100)
+	private String title;
+
+	@OneToMany(mappedBy = "book_id", targetEntity = BookAuthorsImpl.class)
 	Set<BookAuthorsImpl> authors_set;
 
-    @OneToMany(mappedBy="book_id", targetEntity = BookCopiesImpl.class)
+	@OneToMany(mappedBy = "book_id", targetEntity = BookCopiesImpl.class)
 	Set<BookCopiesImpl> book_copies_set;
 
-    @OneToMany(mappedBy="book_id", targetEntity = BookLoansImpl.class)
+	@OneToMany(mappedBy = "book_id", targetEntity = BookLoansImpl.class)
 	Set<BookLoansImpl> bookloans_set;
 
-    @Override
+	@Override
 	public String getBook_id() {
 		return book_id;
 	}
-    
-    
+
 	public void setBook_id(String book_id) {
 		this.book_id = book_id;
 	}
 
-    @Override
+	@Override
 	public String getTitle() {
 		return title;
 	}
 
-    
 	public void setTitle(String title) {
 		this.title = title;
 	}
@@ -103,17 +96,11 @@ public class BookImpl implements Book{
 		this.title = title;
 	}
 
-
 	/**
 	 * 
 	 */
 	public BookImpl() {
 		super();
 	}
-	
-	
-	
-    
-    
- 	
+
 }

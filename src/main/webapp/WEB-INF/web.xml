@@ -21,6 +21,9 @@
 		<servlet-name>dispatch</servlet-name>
 		<servlet-class>org.springframework.web.context.support.HttpRequestHandlerServlet</servlet-class>
 	</servlet>
-
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/errors/404.jsp</location>
+	</error-page>
 </web-app>
 

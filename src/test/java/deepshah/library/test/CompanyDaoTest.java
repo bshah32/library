@@ -1,5 +1,8 @@
 package deepshah.library.test;
 
+import java.util.Iterator;
+import java.util.List;
+
 import junit.framework.Assert;
 
 import org.junit.Ignore;
@@ -23,15 +26,26 @@ public class CompanyDaoTest {
 	@Test
 	public void testSaveCompanyAndDepartment() {
 
-		LibraryBranch branch =  librarybranchDao.find(3);
+		LibraryBranch branch = librarybranchDao.find(3);
 		Assert.assertNotNull(branch);
-		System.out.println("Branch : "+branch.getBranch_name());
-		branch = new LibraryBranchImpl(6,"Deep Shah","Hello How Are You");
+		System.out.println("Branch : " + branch.getBranch_name());
+		branch = new LibraryBranchImpl(6, "Deep Shah", "Hello How Are You");
 		librarybranchDao.insert(branch);
-		branch = new LibraryBranchImpl(6,"Deep Shah","Updated");
+		branch = new LibraryBranchImpl(6, "Deep Shah", "Updated");
 		librarybranchDao.update(branch);
+		List<LibraryBranch> list = librarybranchDao.getAllBranches();
+
+		System.out.println("List size is : " + list.size());
+
+		for (LibraryBranch objects : list)
+		{ 
+		String groupname = objects.getAddress();
+		String friendname = objects.getBranch_name();
+		System.out.println( " " + groupname + "	|	"+friendname);
+		}
+		
 	}
-	
+
 	@Test
 	@Ignore
 	public void testFindCompany() {

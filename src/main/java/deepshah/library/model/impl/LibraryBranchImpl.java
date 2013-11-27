@@ -5,34 +5,35 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import deepshah.library.model.LibraryBranch;
 
-
 @Entity
-@Table(name="library_branch")
-public class LibraryBranchImpl implements LibraryBranch{
-	
-	@Id 
-    @Column(name="branch_id", nullable=false)
-	private int branch_id=0;
- 
-    @Column(name="branch_name",length=25)
-    private String branch_name;
+@Table(name = "library_branch")
+@NamedQueries({ @NamedQuery(name = "getAllBranches", query = "SELECT c FROM LibraryBranchImpl c"), })
+public class LibraryBranchImpl implements LibraryBranch {
 
-    @Column(name="address",length=35)
-    private String address;
+	@Id
+	@Column(name = "branch_id", nullable = false)
+	private int branch_id = 0;
 
-    @OneToMany(mappedBy="branch_id", targetEntity = BookCopiesImpl.class)
+	@Column(name = "branch_name", length = 25)
+	private String branch_name;
+
+	@Column(name = "address", length = 35)
+	private String address;
+
+	@OneToMany(mappedBy = "branch_id", targetEntity = BookCopiesImpl.class)
 	Set<BookCopiesImpl> book_copies_set;
 
-    
-    @OneToMany(mappedBy="branch_id", targetEntity = BookLoansImpl.class)
+	@OneToMany(mappedBy = "branch_id", targetEntity = BookLoansImpl.class)
 	Set<BookLoansImpl> book_loans_set;
-    
-    @Override
+
+	@Override
 	public int getBranch_id() {
 		return branch_id;
 	}
@@ -59,8 +60,6 @@ public class LibraryBranchImpl implements LibraryBranch{
 		this.address = address;
 	}
 
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -101,8 +100,5 @@ public class LibraryBranchImpl implements LibraryBranch{
 	public LibraryBranchImpl() {
 		super();
 	}
-    
-	
-    
 
 }

@@ -12,11 +12,9 @@ import javax.persistence.Table;
 
 import deepshah.library.model.BookAuthors;
 
-
 @Entity
-@Table(name="book_authors")
-public class BookAuthorsImpl implements BookAuthors,Serializable{
-
+@Table(name = "book_authors")
+public class BookAuthorsImpl implements BookAuthors, Serializable {
 
 	/**
 	 * 
@@ -24,16 +22,15 @@ public class BookAuthorsImpl implements BookAuthors,Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-    @Column(name="book_id", nullable=false,updatable=false,length=15)
-    private String book_id;
-	
+	@Column(name = "book_id", nullable = false, updatable = false, length = 15)
+	private String book_id;
 
 	@Id
-    @Column(name="author_name", nullable=false,length=30)
-    private String author_name;
-		
+	@Column(name = "author_name", nullable = false, length = 30)
+	private String author_name;
+
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="book_id",referencedColumnName = "book_id")
+	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book;
 
 	@Override
@@ -44,7 +41,7 @@ public class BookAuthorsImpl implements BookAuthors,Serializable{
 	public void setAuthor_name(String author_name) {
 		this.author_name = author_name;
 	}
-	
+
 	@Override
 	public String getBook_id() {
 		return book_id;
@@ -92,7 +89,5 @@ public class BookAuthorsImpl implements BookAuthors,Serializable{
 	public BookAuthorsImpl() {
 		super();
 	}
-
-	
 
 }

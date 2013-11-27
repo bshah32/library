@@ -12,43 +12,38 @@ import javax.persistence.Table;
 
 import deepshah.library.model.BookCopies;
 
-
 @Entity
-@Table(name="book_copies")
-public class BookCopiesImpl  implements BookCopies,Serializable{
-	
+@Table(name = "book_copies")
+public class BookCopiesImpl implements BookCopies, Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Id 
-    @Column(name="book_id", nullable=false,length=15)
+	@Id
+	@Column(name = "book_id", nullable = false, length = 15)
 	private String book_id;
- 
-	@Id 
-    @Column(name="branch_id", nullable=false)
+
+	@Id
+	@Column(name = "branch_id", nullable = false)
 	private int branch_id;
 
-	@Column(name="no_of_copies")
+	@Column(name = "no_of_copies")
 	private int no_of_copies;
-	
+
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="book_id",referencedColumnName = "book_id")
+	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookcopies;
 
-	
 	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
-	@JoinColumn(name="branch_id",referencedColumnName = "branch_id")
+	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl librarybranch_bookcopies;
-
 
 	@Override
 	public String getBook_id() {
 		return book_id;
 	}
-
 
 	public void setBook_id(String book_id) {
 		this.book_id = book_id;
@@ -59,7 +54,6 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		return branch_id;
 	}
 
-
 	public void setBranch_id(int branch_id) {
 		this.branch_id = branch_id;
 	}
@@ -69,13 +63,10 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		return no_of_copies;
 	}
 
-
 	public void setNo_of_copies(int no_of_copies) {
 		this.no_of_copies = no_of_copies;
 	}
 
-
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,7 +76,6 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		result = prime * result + no_of_copies;
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -108,7 +98,6 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		return true;
 	}
 
-
 	/**
 	 * @param book_id
 	 * @param branch_id
@@ -121,7 +110,6 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		this.no_of_copies = no_of_copies;
 	}
 
-
 	/**
 	 * 
 	 */
@@ -129,9 +117,4 @@ public class BookCopiesImpl  implements BookCopies,Serializable{
 		super();
 	}
 
-	
-	
-	
-	
-	
 }

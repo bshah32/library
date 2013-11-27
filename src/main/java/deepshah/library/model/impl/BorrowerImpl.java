@@ -12,39 +12,35 @@ import javax.persistence.Table;
 
 import deepshah.library.model.Borrower;
 
-
 @Entity
-@Table(name="borrower")
-@NamedQueries({
-	@NamedQuery(name="fetchAllBorrowersQuery",
-		query="SELECT b FROM BorrowerImpl b")
-//	, 
-//	@NamedQuery(name="deleteBookByIdQuery",
-//		query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")	
+@Table(name = "borrower")
+@NamedQueries({ @NamedQuery(name = "fetchAllBorrowersQuery", query = "SELECT b FROM BorrowerImpl b")
+// ,
+// @NamedQuery(name="deleteBookByIdQuery",
+// query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")
 })
-public class BorrowerImpl implements Borrower{
-	
-	@Id 
-    @Column(name="card_no", nullable=false,length=10)
-	private String card_no;
- 
-    @Column(name="fname",length=25)
-    private String fname;
-	
-    @Column(name="lname",length=25)
-    private String lname;
-	
-    @Column(name="address",length=35)
-    private String address;
+public class BorrowerImpl implements Borrower {
 
-    @Column(name="phone",length=15)
-    private String phone;
-    
-    @OneToMany(mappedBy="card_no", targetEntity = BookLoansImpl.class)
+	@Id
+	@Column(name = "card_no", nullable = false, length = 10)
+	private String card_no;
+
+	@Column(name = "fname", length = 25)
+	private String fname;
+
+	@Column(name = "lname", length = 25)
+	private String lname;
+
+	@Column(name = "address", length = 35)
+	private String address;
+
+	@Column(name = "phone", length = 15)
+	private String phone;
+
+	@OneToMany(mappedBy = "card_no", targetEntity = BookLoansImpl.class)
 	Set<BookLoansImpl> book_loans_set;
 
-
-    @Override
+	@Override
 	public String getCard_no() {
 		return card_no;
 	}
@@ -161,8 +157,5 @@ public class BorrowerImpl implements Borrower{
 	public BorrowerImpl() {
 		super();
 	}
-	
-    
-    
- 	
+
 }
