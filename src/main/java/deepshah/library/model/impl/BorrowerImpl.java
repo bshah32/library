@@ -9,8 +9,11 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import deepshah.library.model.Borrower;
+import deepshah.library.validator.Phone;
 
 @Entity
 @Table(name = "borrower")
@@ -22,18 +25,24 @@ import deepshah.library.model.Borrower;
 public class BorrowerImpl implements Borrower {
 
 	@Id
+	@NotNull @Size(min=1,max=10, message="Card No value must be of 10 characters")
 	@Column(name = "card_no", nullable = false, length = 10)
 	private String card_no;
 
+	@NotNull @Size(min=1,max=25, message="First Name cannot be empty and should be less than 25")
 	@Column(name = "fname", length = 25)
 	private String fname;
 
+	@NotNull @Size(min=1,max=25, message="Last Name cannot be empty and should be less than 25")
 	@Column(name = "lname", length = 25)
 	private String lname;
 
+	@NotNull @Size(min=1,max=35, message="Address cannot be empty and should be less than 35")
 	@Column(name = "address", length = 35)
 	private String address;
 
+	@NotNull @Size(min=10,max=15, message="Phone Number cannot be empty and should be between 10 to 15")
+	@Phone
 	@Column(name = "phone", length = 15)
 	private String phone;
 
@@ -84,6 +93,8 @@ public class BorrowerImpl implements Borrower {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+
 
 	@Override
 	public int hashCode() {

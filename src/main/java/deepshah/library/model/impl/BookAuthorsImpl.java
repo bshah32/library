@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import deepshah.library.model.BookAuthors;
 
@@ -22,7 +23,6 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "book_id", nullable = false, updatable = false, length = 15)
 	private String book_id;
 
 	@Id

@@ -19,7 +19,7 @@ public class LibraryBranchImpl implements LibraryBranch {
 
 	@Id
 	@Column(name = "branch_id", nullable = false)
-	private int branch_id = 0;
+	private int branch_id = 1;
 
 	@Column(name = "branch_name", length = 25)
 	private String branch_name;

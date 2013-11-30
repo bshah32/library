@@ -1,16 +1,11 @@
 package deepshah.library.dao.impl;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import org.junit.Test;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +69,4 @@ public class LibraryBranchDAOImpl implements LibraryBranchDAO {
 	 List branches = query.getResultList();
 	 return branches;
 	 }
-
 }

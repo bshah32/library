@@ -9,6 +9,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 
 import deepshah.library.model.Book;
 
@@ -19,6 +20,7 @@ import deepshah.library.model.Book;
 // @NamedQuery(name="deleteBookByIdQuery",
 // query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")
 })
+
 public class BookImpl implements Book {
 
 	@Id
@@ -100,7 +102,6 @@ public class BookImpl implements Book {
 	 * 
 	 */
 	public BookImpl() {
-		super();
 	}
 
 }

@@ -17,5 +17,4 @@ public interface LibraryBranchDAO {
 	public List<LibraryBranch> getAllBranches();
 
 	LibraryBranch find(int branch_id);
-
 }
