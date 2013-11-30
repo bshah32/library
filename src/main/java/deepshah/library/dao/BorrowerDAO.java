@@ -1,8 +1,10 @@
 package deepshah.library.dao;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 import deepshah.library.model.Borrower;
+import deepshah.library.model.impl.BookLoansImpl;
 
 public interface BorrowerDAO {
 
@@ -19,6 +21,10 @@ public interface BorrowerDAO {
 	void remove(String card_no);
 
 	boolean matchBorrower(Borrower borrower);
+
+	int getBookIssuedByUser(Borrower borrower);
+
+	int countNoOfBookByBorrower(Borrower borrower);
 
 //	Borrower selectABorrower(Borrower borrower);
 

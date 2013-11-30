@@ -1,5 +1,6 @@
 package deepshah.library.model.impl;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,7 +26,7 @@ import deepshah.library.validator.Phone;
 public class BorrowerImpl implements Borrower {
 
 	@Id
-	@NotNull @Size(min=1,max=10, message="Card No value must be of 10 characters")
+	@NotNull @Size(min=1,max=10, message="Card No cannot be empty and should be less than 10")
 	@Column(name = "card_no", nullable = false, length = 10)
 	private String card_no;
 
@@ -54,6 +55,7 @@ public class BorrowerImpl implements Borrower {
 		return card_no;
 	}
 
+	@Override
 	public void setCard_no(String card_no) {
 		this.card_no = card_no;
 	}
@@ -72,6 +74,7 @@ public class BorrowerImpl implements Borrower {
 		return lname;
 	}
 
+	@Override
 	public void setLname(String lname) {
 		this.lname = lname;
 	}
@@ -89,11 +92,11 @@ public class BorrowerImpl implements Borrower {
 	public String getPhone() {
 		return phone;
 	}
-
+	
+	@Override
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
 
 
 	@Override

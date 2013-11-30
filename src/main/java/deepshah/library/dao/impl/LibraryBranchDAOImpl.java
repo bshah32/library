@@ -45,11 +45,11 @@ public class LibraryBranchDAOImpl implements LibraryBranchDAO {
 	@Override
 	@Transactional(value = "transactionManager", readOnly = false)
 	public boolean isExist(int branchId) {
-		LibraryBranch branch = this.find(branchId);
+		LibraryBranch branch = entityManager.find(LibraryBranchImpl.class, branchId);
 		if (branch == null) {
 			return false;
 		}
-		return entityManager.contains(branch);
+		return true;
 	}
 
 	@Override
@@ -69,4 +69,6 @@ public class LibraryBranchDAOImpl implements LibraryBranchDAO {
 	 List branches = query.getResultList();
 	 return branches;
 	 }
+	 
 }
+

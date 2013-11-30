@@ -158,18 +158,21 @@ body {
 						<form:label cssClass="control-label" path="book_id">Book Id</form:label>
 						<div class="controls">
 							<form:input path="book_id" placeholder="Book Id" />
+							<font color="red"><form:errors  cssClass="error" path="book_id" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
 						<form:label cssClass="control-label" path="branch_id">Branch Id</form:label>
 						<div class="controls">
 							<form:input path="branch_id" placeholder="Branch Id" />
+							<font color="red"><form:errors  cssClass="error" path="branch_id" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
 						<form:label cssClass="control-label" path="card_no">Card Number</form:label>
 						<div class="controls">
 							<form:input path="card_no" placeholder="Card No" />
+							<font color="red"><form:errors  cssClass="error" path="card_no" /> </font>
 						</div>
 					</div>
 				 	<%-- <div class="control-group">

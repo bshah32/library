@@ -9,12 +9,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import deepshah.library.model.LibraryBranch;
 
 @Entity
 @Table(name = "library_branch")
-@NamedQueries({ @NamedQuery(name = "getAllBranches", query = "SELECT c FROM LibraryBranchImpl c"), })
+@NamedQueries({ @NamedQuery(name = "getAllBranches", query = "SELECT c FROM LibraryBranchImpl c"),
+	@NamedQuery(name = "getAllBranchId", query = "SELECT c.branch_id FROM LibraryBranchImpl c"),})
 public class LibraryBranchImpl implements LibraryBranch {
 
 	@Id

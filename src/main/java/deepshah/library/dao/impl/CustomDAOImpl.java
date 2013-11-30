@@ -3,6 +3,7 @@ package deepshah.library.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Parameter;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -71,4 +72,22 @@ public class CustomDAOImpl implements CustomDAO{
 	 List<Object[]> result = query.getResultList();
 	 return result;
 	 }
+	 
+	 @Override
+	 public int getBookAvailabilityInBranch(String ofBookId,String inBranch) {
+		 Query query = entityManager.createNativeQuery("SELECT a.num_avail "
+					+ "FROM library_branch AS r, "
+					+ "(SELECT c.title,c.branch_id,c.no_of_copies, COUNT(card_no) as num_out, (c.no_of_copies- COUNT(card_no)) as num_avail"
+					+ " FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE book_id = '"+ofBookId+"' and branch_id='"+inBranch+"') as c "
+					+ " LEFT JOIN "
+					+ "(SELECT * FROM book NATURAL JOIN book_loans WHERE book_id = '"+ofBookId+"' and branch_id='"+inBranch+"') as b "
+					+ "ON c.branch_id = b.branch_id GROUP BY c.branch_id) AS a "
+					+ "WHERE r.branch_id = a.branch_id");
+	 List result = query.getResultList();
+	 if(result == null)
+		 return 0;
+	 int bookleft = Integer.valueOf(result.get(0).toString());
+	 	return bookleft;
+	 }
+	 
 }

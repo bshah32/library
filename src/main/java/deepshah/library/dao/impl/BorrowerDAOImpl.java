@@ -1,6 +1,7 @@
 package deepshah.library.dao.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import deepshah.library.dao.BorrowerDAO;
+import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
+import deepshah.library.model.impl.BookLoansImpl;
 import deepshah.library.model.impl.BorrowerImpl;
 
 @Repository
@@ -23,9 +26,9 @@ public class BorrowerDAOImpl implements BorrowerDAO {
 	@Override
 	public Borrower find(String card_no) {
 		Borrower borrower = entityManager.find(BorrowerImpl.class, card_no);
-		if (borrower == null)
-			return null;
-		return borrower;
+		if (borrower != null)
+			return borrower;
+		return null;
 	}
 
 	// insert into borrower (address, fname, lname, phone, card_no) values (?,
@@ -46,20 +49,18 @@ public class BorrowerDAOImpl implements BorrowerDAO {
 
 	// select EXISTS(select * from borrower where card_no='?'); it will return 0,1 if(0)==false if(1)==true
 	@Override
-	@Transactional(value = "transactionManager", readOnly = false)
 	public boolean isExist(Borrower borrower) {
 		return entityManager.contains(borrower);
 	}
 
 	// select EXISTS(select * from borrower where card_no='?'); it will return 0,1 if(0)==false if(1)==true	
 	@Override
-	@Transactional(value = "transactionManager", readOnly = false)
 	public boolean isExist(String card_no) {
-		Borrower borrower = this.find(card_no);
+		Borrower borrower = entityManager.find(BorrowerImpl.class, card_no);
 		if (borrower == null) {
 			return false;
 		}
-		return entityManager.contains(borrower);
+		return true;
 	}
 
 	@Override
@@ -92,5 +93,21 @@ public class BorrowerDAOImpl implements BorrowerDAO {
 	 	 }
 		 		 return false;	
 	}
+	
+	@Override
+	public int getBookIssuedByUser(Borrower borrower){
+	return 0;
+	}
+	
+	@Override
+	public int countNoOfBookByBorrower(Borrower borrower){
+		TypedQuery<BookLoansImpl> query = entityManager.createQuery("FROM BookLoansImpl c WHERE c.card_no=:cardNo", BookLoansImpl.class);
+		query.setParameter("cardNo",borrower.getCard_no());
+		List<BookLoansImpl> fetchedBooks = query.getResultList();
+		return fetchedBooks.size();
+	}
+	
+	
+	
 
 }

@@ -121,7 +121,7 @@ body {
 	<div class="container">
 
 		<div class="masthead">
-			<h3 class="muted">Project name</h3>
+			<h3 class="muted">Library Project</h3>
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container">
@@ -152,12 +152,12 @@ body {
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>branch_id</th>
-							<th>branch_name</th>
-							<th>address</th>
-							<th>address</th>
-							<th>address</th>
-							<th>address</th>
+							<th>Branch Id</th>
+							<th>Branch Name</th>
+							<th>Address</th>
+							<th>Number of Copies</th>
+							<th>Books Issued</th>
+							<th>Books Available</th>
 						</tr>
 					<thead>
 					<tbody>

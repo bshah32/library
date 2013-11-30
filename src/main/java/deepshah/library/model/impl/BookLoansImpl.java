@@ -12,6 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 import deepshah.library.model.BookLoans;
 
@@ -30,14 +37,21 @@ public class BookLoansImpl implements BookLoans, Serializable {
 
 	@Id
 	@Column(name = "book_id", nullable = false, length = 15)
+	@NotNull 
+	@Size(min=1,max=15, message="Book ID cannot be empty and should be less than 15")
 	private String book_id;
 
 	@Id
 	@Column(name = "branch_id", nullable = false)
+	@NotNull
+	@NumberFormat(style=Style.NUMBER)
+	@Min(1)
+	@Max(5)
 	private int branch_id = 1;
 
 	@Id
 	@Column(name = "card_no", nullable = false, length = 10)
+	@NotNull @Size(min=1,max=10, message="Card No cannot be empty and should be less than 10")
 	private String card_no;
 
 	@Column(name = "date_out")
@@ -45,6 +59,7 @@ public class BookLoansImpl implements BookLoans, Serializable {
 
 	@Column(name = "due_date")
 	private Date due_date; // = new java.sql.Date(new java.util.Date().getTime());
+	
 	
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
@@ -124,6 +139,31 @@ public class BookLoansImpl implements BookLoans, Serializable {
 		this.card_no = card_no;
 		this.date_out = date_out;
 		this.due_date = due_date;
+	}
+
+	
+	public BookImpl getBook_bookloans() {
+		return book_bookloans;
+	}
+
+	public void setBook_bookloans(BookImpl book_bookloans) {
+		this.book_bookloans = book_bookloans;
+	}
+
+	public LibraryBranchImpl getLibrary_bookloans() {
+		return library_bookloans;
+	}
+
+	public void setLibrary_bookloans(LibraryBranchImpl library_bookloans) {
+		this.library_bookloans = library_bookloans;
+	}
+
+	public BorrowerImpl getBorrower_bookloans() {
+		return borrower_bookloans;
+	}
+
+	public void setBorrower_bookloans(BorrowerImpl borrower_bookloans) {
+		this.borrower_bookloans = borrower_bookloans;
 	}
 
 	/**

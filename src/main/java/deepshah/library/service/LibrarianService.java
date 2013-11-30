@@ -4,6 +4,7 @@ import java.util.List;
 
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
+import deepshah.library.model.LibraryBranch;
 
 public interface LibrarianService {
 
@@ -30,6 +31,17 @@ public interface LibrarianService {
 	Borrower searchBorrower(String card_no);
 
 	void removeBorrower(String card_no);
+
+	int validIssueStatusOfBorrower(Borrower borrower);
+
+	Borrower findBorrower(String card_no);
+
+	boolean bookExists(String bookId);
+
+	boolean branchExists(int branchId);
 	
+	boolean borrowerExists(String cardNo);
+
+	boolean cheackBookAvailablility(String bookId, String branchId);
 
 }

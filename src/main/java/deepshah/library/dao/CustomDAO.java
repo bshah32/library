@@ -12,4 +12,6 @@ public interface CustomDAO {
 
 	List<Object[]> getByIdAndTitle(String book_id, String title);
 
+	int getBookAvailabilityInBranch(String ofBook, String inBranch);
+
 }

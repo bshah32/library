@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +55,11 @@ public class MainController {
 		List<Object[]> list = null;
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			ModelAndView mv = new ModelAndView("book/bookAvailability");
+			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
 			return mv;
 		}
-		System.out.println(book.getTitle());
-		System.out.println(book.getBook_id());
 		if(book.getTitle().equals(null) || book.getBook_id().equals(null)){
-			ModelAndView mv = new ModelAndView("book/bookAvailability");
+			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
 			return mv;	
 		}
 		else if((!book.getBook_id().equals(null)) && (book.getBook_id().equals(null))){
@@ -72,7 +71,7 @@ public class MainController {
 		else {
 			list = librarian_service.getBookAvailabilityByIdAndName(book.getBook_id(), book.getTitle());
 		}
-		ModelAndView mv = new ModelAndView("/book/tempList");
+		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
 		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
 		return mv;
@@ -85,12 +84,11 @@ public class MainController {
 			IOException {
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			ModelAndView mv = new ModelAndView("book/bookAvailability");
+			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
 			return mv;
 		}
-		System.out.println(author.getAuthor_name());
 		List<Object[]> list = librarian_service.getBookAvailabilityByAuthor(author.getAuthor_name());
-		ModelAndView mv = new ModelAndView("/book/tempList");
+		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
 		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
 		return mv;
@@ -106,29 +104,50 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/book/onBookCheckin", method = RequestMethod.POST)
-	@ExceptionHandler(EntityExistsException.class)
 	public ModelAndView onBookCheckin(
 			@ModelAttribute("book_loans_model") @Valid BookLoansImpl new_book,
 			BindingResult result, Model model) throws IllegalStateException,
-			IOException {
+			IOException,EntityExistsException,EntityNotFoundException{
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
 			ModelAndView mv = new ModelAndView("book/bookCheckin");
-			mv.addObject("output", "Check-in New Book");
+			mv.addObject("output", "Enter Checking Details");
 			mv.addObject("status","Error in checkin book.Please check the information.");
 			return mv;
 		}
 		ModelAndView mv = new ModelAndView("book/bookCheckin");
-		mv.addObject("output", "Checkin New Book");
 		mv.addObject("book_loans_model", new BookLoansImpl());
+		mv.addObject("output", "Enter Checking Details");
+		
+		if(!librarian_service.bookExists(new_book.getBook_id())){
+			mv.addObject("status","Given Book Does not Exist");
+			return mv;
+		}
+		if(!librarian_service.branchExists(new_book.getBranch_id())){
+			mv.addObject("status","Given Branch Does not Exist");
+			return mv;
+		}
+		if(!librarian_service.borrowerExists(new_book.getCard_no())){
+			mv.addObject("status","Given Borrower Does not Exist");
+			return mv;
+		} else{
+			Borrower borrower = librarian_service.findBorrower(new_book.getCard_no());	
+			if(librarian_service.validIssueStatusOfBorrower(borrower) >= 3){
+				mv.addObject("status","Book Issued Limit Reached for '"+borrower.getFname()+". "+borrower.getLname()+"' .Cannot Issue More than 3 Books");
+			return mv;	
+			}
+		}
+		if(!librarian_service.cheackBookAvailablility(new_book.getBook_id(),String.valueOf(new_book.getBranch_id()))){
+			mv.addObject("status","Book is not available. All books are issued");
+			return mv;
+		}
 		if(librarian_service.checkinNewBook(new_book)){
 			mv.addObject("status","Book has been checked in");
-		}
-		else {
-			mv.addObject("status","Book has not been checked in as it already exists");
-		}
-		return mv;
-		
+			}
+			else {
+				mv.addObject("status","Book has not been checked in as it already exists");
+			}
+			return mv;
 	}
 	
 	@RequestMapping(value = "/book/bookcheckout", method = RequestMethod.GET)
@@ -144,12 +163,6 @@ public class MainController {
 	public String deleteLibrarian(@PathVariable("book_id") String bookId,@PathVariable("branch_id") int branchId,
 			@PathVariable("card_no") String cardNo) throws Exception {
 		BookLoansImpl book = new BookLoansImpl(bookId, branchId, cardNo, null,null); 
-		System.out.println(book.getBook_id());
-		System.out.println(book.getBranch_id());
-		System.out.println(book.getCard_no());
-		System.out.println(book.getDate_out());
-		System.out.println(book.getDue_date());
-	
 		librarian_service.checkoutOldBook(book);
 		return "redirect:/book/bookcheckout";
 	}
