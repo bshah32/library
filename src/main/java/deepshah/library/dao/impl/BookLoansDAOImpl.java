@@ -26,12 +26,13 @@ public class BookLoansDAOImpl implements BookLoansDAO{
 		try
 		{
 		if (!isExist(book)) {
-			 Query query = entityManager.createNativeQuery("insert into book_loans (book_id, card_no, date_out, due_date, branch_id) values (:bookId, :cardNo,DATE_ADD(CURDATE(),INTERVAL 14 DAY), :dueDate,:branchId)",BookLoansImpl.class);
+			Query query = entityManager.createNativeQuery("insert into book_loans (book_id, card_no, date_out, due_date, branch_id) values (:bookId, :cardNo,:dateOut, :dueDate,:branchId)",BookLoansImpl.class);
 			query.setParameter("bookId", book.getBook_id());
 			query.setParameter("branchId",book.getBranch_id());
 			query.setParameter("cardNo",book.getCard_no());
 			query.setParameter("dueDate",book.getDue_date());
-				query.executeUpdate();
+			query.setParameter("dateOut",book.getDate_out());
+			query.executeUpdate();
 				return true;
 			}
 		}

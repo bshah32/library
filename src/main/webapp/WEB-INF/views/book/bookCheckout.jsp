@@ -123,15 +123,18 @@ body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li ><a
-								href='${pageContext.request.contextPath}/'>Home</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookavailability'>Book
+							<li><a href='${pageContext.request.contextPath}/'>Home</a></li>
+							<li><a
+								href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+							<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
 									Checkin</a></li>
-							<li  class="active"><a href='${pageContext.request.contextPath}/book/bookcheckout'>Book
+							<li class="active"><a
+								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
-							<li><a href='${pageContext.request.contextPath}/borrower/addborrower'>Add
+							<li><a
+								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
 						</ul>
 					</div>
@@ -146,40 +149,37 @@ body {
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-					<table class="table table-hover">
-					<thead>
-						<tr>
-							<th>Book Id</th>
-							<th>Branch Id</th>
-							<th>Card No</th>
-							<th>Due Date</th>
-							<th>Date Out</th>
-							<th>Checkout</th>
-						</tr>
-					<thead>
-					<tbody>
-						<c:forEach items="${book_loans_model}" var="bookLoanModel">
-
-							<tr>
-								<td>${bookLoanModel.book_id}</td>
-								<td>${bookLoanModel.branch_id}</td>
-								<td>${bookLoanModel.card_no}</td>
-								<td>${bookLoanModel.due_date}</td>
-								<td>${bookLoanModel.date_out}</td>
-								<td>
-								<%-- <a
-									href='${pageContext.request.contextPath}/book/info/${bookLoanModel}'>
-										<i class="icon-edit"></i>
-								</a> &nbsp; --%> <a
-									href='${pageContext.request.contextPath}/book/onBookCheckout/${bookLoanModel.book_id}/${bookLoanModel.branch_id}/${bookLoanModel.card_no}'>
-										<i class="icon-remove"></i>
-								</a></td>
-
-							</tr>
-
-						</c:forEach>
-					</tbody>
-				</table>		
+				<form class="form-horizontal" method="get" action="${pageContext.request.contextPath}/book/searcheckoutbooks/">
+					<div class="control-group">
+						<label class="control-label">Book Id</label>
+						<div class="controls">
+							<input type="text" name="bookid" placeholder="Book Id" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Card Number</label>
+						<div class="controls">
+							<input type="text" name="cardno" placeholder="Card Number" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">First Name</label>
+						<div class="controls">
+							<input type="text" name="fname"  placeholder="First Name" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label">Last Name</label>
+						<div class="controls">
+							<input type="text" name="lname" placeholder="Last Name" />
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn btn-primary" type="submit">Submit</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
 		<hr>

@@ -2,6 +2,7 @@ package deepshah.library.service;
 
 import java.util.List;
 
+import deepshah.library.jspmodels.bookdisplay;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
@@ -43,5 +44,8 @@ public interface LibrarianService {
 	boolean borrowerExists(String cardNo);
 
 	boolean cheackBookAvailablility(String bookId, String branchId);
+
+	List<Object[]> getIssuedBook(String bookId, String cardNo, String fName,
+			String lName);
 
 }

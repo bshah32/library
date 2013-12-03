@@ -63,7 +63,7 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private Date date_out = today_date; 
 
 	@Column(name = "due_date")
-	private Date due_date ;//= addDay(today_date,14);
+	private Date due_date = addDays(today_date,14);
 	
 	
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
@@ -79,16 +79,14 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private BorrowerImpl borrower_bookloans;
 
 	
-//
-//	public java.sql.Date addDays(Date givenDate,int days){
-//		Calendar cal = Calendar.getInstance();
-//		cal.setTime(givenDate);
-//		 cal.add(Calendar.DATE, days);
-//	//	long newDate = new Date(cal.getTime().getTime());
-//
-//	//	System.out.println(newDate);
-//	//	return new java.sql.Date(newDate);
-//	}
+
+	public java.sql.Date addDays(java.sql.Date givenDate,int days){
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(givenDate);
+		 cal.add(Calendar.DATE, days);
+		Date newDate = new Date(cal.getTime().getTime());
+		return newDate;
+	}
 	
 	@Override
 	public String getBook_id() {

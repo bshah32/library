@@ -26,7 +26,6 @@ import deepshah.library.model.Book;
 public class BookImpl implements Book {
 
 	@Id
-	@NotNull @Size(min=1,max=15, message="Book ID cannot be empty and should be less than 15")
 	@Column(name = "book_id", nullable = false, length = 15)
 	private String book_id;
 

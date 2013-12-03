@@ -11,6 +11,7 @@ import deepshah.library.dao.BookLoansDAO;
 import deepshah.library.dao.BorrowerDAO;
 import deepshah.library.dao.CustomDAO;
 import deepshah.library.dao.LibraryBranchDAO;
+import deepshah.library.jspmodels.bookdisplay;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
@@ -134,6 +135,12 @@ public class LibrarianServiceImpl implements LibrarianService{
 	@Override
 	public boolean borrowerExists(String cardNo) {
 		return borrower_dao.isExist(cardNo);
+	}
+	
+	@Override
+	public List<Object[]> getIssuedBook(String bookId,String cardNo,String fName,String lName) {
+		List<Object[]> books= custom_dao.getIssuedBook(bookId, cardNo, fName, lName);
+		return books;
 	}
 	
 	@Override

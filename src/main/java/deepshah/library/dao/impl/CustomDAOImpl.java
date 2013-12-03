@@ -10,21 +10,21 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import deepshah.library.dao.CustomDAO;
+import deepshah.library.jspmodels.bookdisplay;
 
 @Repository
 public class CustomDAOImpl implements CustomDAO{
 
 	@PersistenceContext(unitName = "companySetup")
 	private EntityManager entityManager;
-
 	 @Override
 	 public List<Object[]> getByTitle(String title) {
 		 Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch_id,r.branch_name,a.no_of_copies,a.num_out,a.num_avail "
 				 + "FROM library_branch AS r, "
 				 + "(SELECT c.book_id,c.title,c.branch_id,c.no_of_copies, COUNT(card_no) as num_out, (c.no_of_copies- COUNT(card_no)) as num_avail "
-				 + "FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE (title LIKE '%"+title+"%')) as c  "
+				 + "FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE title LIKE '%"+title+"%') as c  "
 				 + "LEFT JOIN "
-				 + "(SELECT * FROM book NATURAL JOIN book_loans WHERE (title LIKE '%"+title+"%')) as b "
+				 + "(SELECT * FROM book NATURAL JOIN book_loans WHERE title LIKE '%"+title+"%') as b "
 				 + "ON c.branch_id = b.branch_id "
 				 + "GROUP BY c.book_id,c.branch_id) AS a "
 				 + "WHERE r.branch_id=a.branch_id "
@@ -54,9 +54,9 @@ public class CustomDAOImpl implements CustomDAO{
 Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch_id,r.branch_name,a.no_of_copies,a.num_out,a.num_avail "
 		+ "FROM library_branch AS r, "
 		+ "(SELECT c.book_id,c.title,c.branch_id,c.no_of_copies, COUNT(card_no) as num_out, (c.no_of_copies- COUNT(card_no)) as num_avail "
-		+ "FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE (book_id LIKE '%"+book_id+"%') OR (title LIKE '%"+title+"%')) as c  "
+		+ "FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE (book_id LIKE '%"+book_id+"%') AND (title LIKE '%"+title+"%')) as c  "
 		+ "LEFT JOIN "
-		+ "(SELECT * FROM book NATURAL JOIN book_loans WHERE (book_id LIKE '%"+book_id+"%') OR (title LIKE '%"+title+"%')) as b "
+		+ "(SELECT * FROM book NATURAL JOIN book_loans WHERE (book_id LIKE '%"+book_id+"%') AND (title LIKE '%"+title+"%')) as b "
 		+ "ON c.branch_id = b.branch_id "
 		+ "GROUP BY c.book_id,c.branch_id) AS a "
 		+ "WHERE r.branch_id=a.branch_id "
@@ -64,6 +64,7 @@ Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch
 	List<Object[]> result = query.getResultList();
 	 return result;
 	 }
+	
 	 @Override
 	 public List<Object[]> getByAuthor(String book_author){
 		 Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch_id,r.branch_name,a.no_of_copies,a.num_out,a.num_avail "
@@ -96,5 +97,12 @@ Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch
 	 int bookleft = Integer.valueOf(result.get(0).toString());
 	 	return bookleft;
 	 }
-	 
+	 @Override
+	 public List<Object[]> getIssuedBook(String bookId,String cardNo,String fName,String lName){
+		 Query query = entityManager.createNativeQuery("select a.book_id,a.branch_id,a.card_no,b.fname,b.lname,a.date_out,a.due_date "
+		 		+ "from book_loans as a,borrower as b "
+		 		+ "WHERE a.card_no=b.card_no AND b.lname LIKE '%"+lName+"%' AND b.fname LIKE '%"+fName+"%' AND b.card_no LIKE '%"+cardNo+"%' AND a.book_id LIKE '%"+bookId+"%'");
+	 List<Object[]> result = query.getResultList();
+	 return result;
+	 }
 }

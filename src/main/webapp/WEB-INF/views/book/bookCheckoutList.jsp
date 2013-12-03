@@ -117,20 +117,19 @@ body {
 <body>
 
 	<div class="container">
-
 		<div class="masthead">
 			<h3 class="muted">Library Project</h3>
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li  class="active"><a
+							<li ><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
 							<li><a href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
 							<li><a href='${pageContext.request.contextPath}/book/bookcheckin'>Book
 									Checkin</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckout'>Book
+							<li  class="active"><a href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
 							<li><a href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
@@ -147,52 +146,54 @@ body {
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-				<p>
-				<b>1) Determining Book Availability</b> <br /> 
-					Using your GUI, be able to search for a book, given any combination of book_id, title, and/or
-					author_name. Your query should support substring matching. You
-					should then display: book_id branch_id Both Total number and
-					Available number of book copies at each branch. Hint: For Available
-					number, you must subtract the number of BOOK_LOANS (i.e. COUNT(*))
-					from No_of_copies for a branch. 
-				</p>
-				<p>
-					<b>2) Book Loans Checking And Checkout Books</b><br />
-					<b>Checking Out Books</b>	<br />			
-						Using your GUI, be able to check out a book, given the combination
-					of BOOK_COPIES(book_id, branch_id) and BORROWER(Card_no), i.e.
-					create a new tuple in BOOK_LOANS. The date_out should be today's
-					date. The due_date should be 14 days after the date_out. Each
-					BORROWER is permitted a maximum of 3 BOOK_LOANS. If a BORROWER
-					already has 3 BOOK_LOANS, then the checkout (i.e. create new
-					BOOK_LOANS tuple) should fail and return a useful error message. If
-					the number of BOOK_LOANS for a given book at a branch already
-					equals the No_of_copies (i.e. There are no more book copies
-					available at your library_branch), then the checkout should fail
-					and return a useful error message.
-					<br /><b>Checking In Books</b> <br />
-						Using a GUI, be able to check in a book. Be able to locate BOOK_LOANS tuples by
-					searching on any of book_id, Card_no, and/or any part of BORROWER
-					name. Once located, provide a way of selecting one of potentially
-					multiple results and a button (or menu item) to check in (i.e.
-					delete that BOOK_LOANS tuple).
-					</p>
-					<p>
-					<b>3) Borrowers</b> <br /> 
-						Using your GUI, be able to create new borrowers in the system. All name and address
-					attributes are required to create a new account (i.e. not null).
-					Borrowers are allowed to possess exactly one library card. If a new
-					borrower is attempted withe same fname, lname, and address, then
-					your system should reject and return a useful error message.</p>
+					<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Book Id</th>
+							<th>Branch Id</th>
+							<th>Card No</th>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Due Date</th>
+							<th>Date Out</th>
+							<th>Checkout</th>
+						</tr>
+					<thead>
+					
+					<tbody>
+						<c:forEach items="${book_loans_model}" var="bookLoanModel">
+
+							<tr>
+								<td>${bookLoanModel.book_id}</td>
+								<td>${bookLoanModel.branch_id}</td>
+								<td>${bookLoanModel.card_no}</td>
+								<td>${bookLoanModel.fname}</td>
+								<td>${bookLoanModel.lname}</td>
+								<td>${bookLoanModel.due_date}</td>
+								<td>${bookLoanModel.date_out}</td>
+								<td>
+								<%-- <a
+									href='${pageContext.request.contextPath}/book/info/${bookLoanModel}'>
+										<i class="icon-edit"></i>
+								</a> &nbsp; --%> <a
+									href='${pageContext.request.contextPath}/book/onSelectedBookCheckout/${bookLoanModel.book_id}/${bookLoanModel.branch_id}/${bookLoanModel.card_no}'>
+										<i class="icon-remove"></i>
+								</a></td>
+
+							</tr>
+
+						</c:forEach>
+					</tbody>
+				</table>		
 			</div>
 		</div>
 		<hr>
-
 		<div class="footer">
 			<p>&copy; Deep Shah</p>
 		</div>
 
 	</div>
+
 	<!-- /container -->
 
 	<!-- Le javascript

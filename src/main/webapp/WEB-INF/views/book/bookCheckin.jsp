@@ -184,7 +184,7 @@ body {
 					<div class="control-group">
 						<form:label cssClass="control-label" path="date_out">Date Out</form:label>
 						<div class="controls">
-							<form:input path="date_out" placeholder="Date Out" />
+							<form:input path="date_out" placeholder="Date Out" readonly="true"/>
 						</div>
 					</div>  
 					<div class="control-group">
