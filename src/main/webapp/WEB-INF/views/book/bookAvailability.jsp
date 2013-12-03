@@ -146,45 +146,34 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Status : </strong> <c:out value="${status}"></c:out>
+			</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
 				<h1>Search by Book Id and Book Name</h1>
-				<form:form method="post" modelAttribute="book_model"
-					action="${pageContext.request.contextPath}/book/searchingBookbyNameandId"
+				<form:form method="post" modelAttribute="model"
+					action="${pageContext.request.contextPath}/book/searchingBookbyNameIdAuthor"
 					cssClass="form-horizontal">
 					<div class="control-group">
-						<form:label cssClass="control-label" path="book_id">Book Id</form:label>
+						<form:label cssClass="control-label" path="book.book_id">Book Id</form:label>
 						<div class="controls">
-							<form:input path="book_id" placeholder="Book Id" />
+							<form:input path="book.book_id" placeholder="Book Id" />
 						</div>
 					</div>
 					<div class="control-group">
-						<form:label cssClass="control-label" path="title">Book Name</form:label>
+						<form:label cssClass="control-label" path="book.title">Book Name</form:label>
 						<div class="controls">
-							<form:input path="title" placeholder="Book Name" />
+							<form:input path="book.title" placeholder="Book Name" />
 						</div>
 					</div>
 					<div class="control-group">
+						<form:label cssClass="control-label" path="author.author_name">Author Name</form:label>
 						<div class="controls">
-							<button class="btn btn-primary" type="submit">Submit</button>
-							<button type="reset" class="btn">Reset</button>
-						</div>
-					</div>
-				</form:form>
-			</div>
-		</div>
-		<div class="row-fluid">
-			<div class="span12">
-				<h1>Search by Author Name</h1>
-				<form:form method="post" modelAttribute="author_model"
-					action="${pageContext.request.contextPath}/book/searchingBookByAuthor"
-					cssClass="form-horizontal">
-					<div class="control-group">
-						<form:label cssClass="control-label" path="author_name">Author Name</form:label>
-						<div class="controls">
-							<form:input path="author_name" placeholder="Author Name" />
+							<form:input path="author.author_name" placeholder="Author Name" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -199,7 +188,7 @@ body {
 		<hr>
 
 		<div class="footer">
-			<p>&copy; Company 2013</p>
+			<p>&copy; Deep Shah</p>
 		</div>
 
 	</div>
