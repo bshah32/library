@@ -2,6 +2,7 @@ package deepshah.library.model.impl;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,9 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	/**
 	 * 
 	 */
+	
+	private Date today_date = new java.sql.Date(new java.util.Date().getTime());
+	
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -55,10 +59,10 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private String card_no;
 
 	@Column(name = "date_out")
-	private Date date_out; // = new java.sql.Date(new java.util.Date().getTime()); 
+	private Date date_out = today_date; 
 
 	@Column(name = "due_date")
-	private Date due_date; // = new java.sql.Date(new java.util.Date().getTime());
+	private Date due_date ;//= addDay(today_date,14);
 	
 	
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
@@ -73,6 +77,18 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	@JoinColumn(name = "card_no", referencedColumnName = "card_no")
 	private BorrowerImpl borrower_bookloans;
 
+	
+//
+//	public java.sql.Date addDays(Date givenDate,int days){
+//		Calendar cal = Calendar.getInstance();
+//		cal.setTime(givenDate);
+//		 cal.add(Calendar.DATE, days);
+//	//	long newDate = new Date(cal.getTime().getTime());
+//
+//	//	System.out.println(newDate);
+//	//	return new java.sql.Date(newDate);
+//	}
+	
 	@Override
 	public String getBook_id() {
 		return book_id;

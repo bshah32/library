@@ -6,5 +6,9 @@ public interface Book {
 
 	public String getTitle();
 
+	void setBook_id(String book_id);
+
+	void setTitle(String title);
+
 
 }

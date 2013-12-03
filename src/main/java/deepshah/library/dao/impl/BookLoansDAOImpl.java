@@ -3,8 +3,6 @@ package deepshah.library.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -14,9 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import deepshah.library.dao.BookLoansDAO;
 import deepshah.library.model.BookLoans;
-import deepshah.library.model.LibraryBranch;
 import deepshah.library.model.impl.BookLoansImpl;
-import deepshah.library.model.impl.LibraryBranchImpl;
 
 @Repository
 public class BookLoansDAOImpl implements BookLoansDAO{
@@ -30,10 +26,11 @@ public class BookLoansDAOImpl implements BookLoansDAO{
 		try
 		{
 		if (!isExist(book)) {
-			 Query query = entityManager.createNativeQuery("insert into book_loans (book_id, card_no, date_out, due_date, branch_id) values (:bookId, :cardNo,DATE_ADD(CURDATE(),INTERVAL 14 DAY),CURDATE(),:branchId)",BookLoansImpl.class);
+			 Query query = entityManager.createNativeQuery("insert into book_loans (book_id, card_no, date_out, due_date, branch_id) values (:bookId, :cardNo,DATE_ADD(CURDATE(),INTERVAL 14 DAY), :dueDate,:branchId)",BookLoansImpl.class);
 			query.setParameter("bookId", book.getBook_id());
 			query.setParameter("branchId",book.getBranch_id());
 			query.setParameter("cardNo",book.getCard_no());
+			query.setParameter("dueDate",book.getDue_date());
 				query.executeUpdate();
 				return true;
 			}

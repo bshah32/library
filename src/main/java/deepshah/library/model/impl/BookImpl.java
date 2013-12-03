@@ -47,6 +47,7 @@ public class BookImpl implements Book {
 		return book_id;
 	}
 
+	@Override
 	public void setBook_id(String book_id) {
 		this.book_id = book_id;
 	}
@@ -56,6 +57,7 @@ public class BookImpl implements Book {
 		return title;
 	}
 
+	@Override
 	public void setTitle(String title) {
 		this.title = title;
 	}

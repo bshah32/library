@@ -175,10 +175,10 @@ body {
 							<font color="red"><form:errors  cssClass="error" path="card_no" /> </font>
 						</div>
 					</div>
-				 	<%-- <div class="control-group">
+				 	<div class="control-group">
 						<form:label cssClass="control-label" path="due_date">Date In</form:label>
 						<div class="controls">
-							<form:input path="due_date" placeholder="Date In" />
+							<form:input path="due_date" placeholder="Date In" readonly="true"/>
 						</div>
 					</div>
 					<div class="control-group">
@@ -186,7 +186,7 @@ body {
 						<div class="controls">
 							<form:input path="date_out" placeholder="Date Out" />
 						</div>
-					</div> --%> 
+					</div>  
 					<div class="control-group">
 						<div class="controls">
 							<button class="btn btn-primary" type="submit">Submit</button>

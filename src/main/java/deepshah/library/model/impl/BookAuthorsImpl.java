@@ -29,6 +29,7 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	@Column(name = "author_name", nullable = false, length = 30)
 	private String author_name;
 
+	
 	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book;
@@ -37,7 +38,8 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	public String getAuthor_name() {
 		return author_name;
 	}
-
+	
+	@Override
 	public void setAuthor_name(String author_name) {
 		this.author_name = author_name;
 	}
@@ -46,7 +48,8 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	public String getBook_id() {
 		return book_id;
 	}
-
+	
+	@Override 
 	public void setBook_id(String book_id) {
 		this.book_id = book_id;
 	}
@@ -90,4 +93,23 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 		super();
 	}
 
+	/**
+	 * @param book_id
+	 * @param author_name
+	 */
+	public BookAuthorsImpl(String book_id, String author_name) {
+		super();
+		this.book_id = book_id;
+		this.author_name = author_name;
+	}
+
+	public BookImpl getBook() {
+		return book;
+	}
+
+	public void setBook(BookImpl book) {
+		this.book = book;
+	}
+
+	
 }

@@ -50,30 +50,37 @@ public class MainController {
 	@RequestMapping(value = "/book/searchingBookbyNameandId", method = RequestMethod.POST)
 	public ModelAndView onSearchingBookByNameAndId(
 			@ModelAttribute("book_model") @Valid BookImpl book,
+			@ModelAttribute("author_model") @Valid BookAuthorsImpl author,
 			BindingResult result, Model model) throws IllegalStateException,
 			IOException {
 		List<Object[]> list = null;
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
+			ModelAndView mv = new ModelAndView("book/bookAvailability");
 			return mv;
 		}
-		if(book.getTitle().equals(null) || book.getBook_id().equals(null)){
-			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
+		System.out.println("Id :"+book.getBook_id());
+		System.out.println("Title :" +book.getTitle());
+		
+		if(book.getTitle() == "" && book.getBook_id()==""){
+			ModelAndView mv = new ModelAndView("book/bookAvailability");
 			return mv;	
 		}
-		else if((!book.getBook_id().equals(null)) && (book.getBook_id().equals(null))){
+		else if((book.getBook_id() != "") && (book.getTitle() == "")){
 				list = librarian_service.getBookAvailabilityById(book.getBook_id());		
 			}
-		else if((book.getBook_id().equals(null)) && (!book.getBook_id().equals(null))){
+		else if((book.getBook_id() == "") && (book.getTitle() != "")){
 			list = librarian_service.getBookAvailabilityByName(book.getTitle());		
 		}
 		else {
 			list = librarian_service.getBookAvailabilityByIdAndName(book.getBook_id(), book.getTitle());
 		}
+
+		System.out.println("List size is : " + list.size());
 		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
 		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
+		mv.addObject("status","You have fetched "+list.size()+" result in Responce");
 		return mv;
 	}
 	

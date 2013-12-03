@@ -42,8 +42,17 @@ public class LibrarianServiceImpl implements LibrarianService{
 	
 	@Override
 	public List<Object[]> getBookAvailabilityById(String book_id){
-		List<Object[]> books= custom_dao.getById(book_id);	
-	return 	books;
+		List<Object[]> books = null;
+		try {
+		books= custom_dao.getById(book_id);
+		
+		}catch(SQLException e){
+		e.printStackTrace();	
+		}
+		catch(Exception e){
+			e.printStackTrace();	
+			}
+		return 	books;
 	}
 	
 	@Override

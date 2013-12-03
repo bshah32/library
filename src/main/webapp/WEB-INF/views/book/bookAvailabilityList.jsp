@@ -145,6 +145,10 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Status : </strong> <c:out value="${status}"></c:out>
+			</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
@@ -152,9 +156,10 @@ body {
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th>Book Id</th>
+							<th>Book Name</th>
 							<th>Branch Id</th>
 							<th>Branch Name</th>
-							<th>Address</th>
 							<th>Number of Copies</th>
 							<th>Books Issued</th>
 							<th>Books Available</th>
@@ -170,6 +175,7 @@ body {
 								<td>${custom_var[3]}</td>
 								<td>${custom_var[4]}</td>
 								<td>${custom_var[5]}</td>
+								<td>${custom_var[6]}</td>
 							<%-- 	<td><a
 									href='${pageContext.request.contextPath}/admin/info/${custom_var[0]}'>
 										<i class="icon-edit"></i>
