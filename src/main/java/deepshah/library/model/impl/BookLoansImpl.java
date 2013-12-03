@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -34,7 +35,7 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	/**
 	 * 
 	 */
-	
+	@Transient
 	private Date today_date = new java.sql.Date(new java.util.Date().getTime());
 	
 	private static final long serialVersionUID = 1L;
