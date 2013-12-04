@@ -22,7 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import deepshah.library.dao.LibraryBranchDAO;
-import deepshah.library.jspmodels.bookdisplay;
+import deepshah.library.jspmodels.BookAuthorRelation;
+import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.impl.BookAuthorsImpl;
@@ -46,15 +47,14 @@ public class MainController {
 	public ModelAndView bookavailability() {
 		ModelAndView mv = new ModelAndView("book/bookAvailability");
 		mv.addObject("output", "Search Book");
-		mv.addObject("book_model", new BookImpl());
-		mv.addObject("author_model", new BookAuthorsImpl());
+		mv.addObject("model", new BookAuthorRelation());
+		mv.addObject("status","Enter Details below");
 		return mv;
 	}
 	
-	@RequestMapping(value = "/book/searchingBookbyNameandId", method = RequestMethod.POST)
+	@RequestMapping(value = "/book/searchingBookbyNameIdAuthor", method = RequestMethod.POST)
 	public ModelAndView onSearchingBookByNameAndId(
-			@ModelAttribute("book_model") @Valid BookImpl book,
-			@ModelAttribute("author_model") @Valid BookAuthorsImpl author,
+			@ModelAttribute("book_model") @Valid BookAuthorRelation book_and_author,
 			BindingResult result, Model model) throws IllegalStateException,
 			IOException,Exception {
 		List<Object[]> list = null;
@@ -63,23 +63,18 @@ public class MainController {
 			ModelAndView mv = new ModelAndView("book/bookAvailability");
 			return mv;
 		}
-		System.out.println("Id :"+ book.getBook_id());
-		System.out.println("Title :" +book.getTitle());
 		
-		if(book.getTitle() == "" && book.getBook_id()==""){
+		if(book_and_author.getBook().getBook_id() == "" && book_and_author.getBook().getTitle()=="" 
+				&& book_and_author.getAuthor().getAuthor_name() == ""){
 			ModelAndView mv = new ModelAndView("book/bookAvailability");
-			return mv;	
+			mv.addObject("output", "Search Book");
+			mv.addObject("model", new BookAuthorRelation());
+			mv.addObject("status","Please enter either Book Id or Book Title or Book Author Name");
+			return mv;
 		}
-		else if((book.getBook_id() != "") && (book.getTitle() == "")){
-				list = librarian_service.getBookAvailabilityById(book.getBook_id());		
-			}
-		else if((book.getTitle() != "") && (book.getBook_id() == "") ){
-			list = librarian_service.getBookAvailabilityByName(book.getTitle());		
-		}
-		else {
-			list = librarian_service.getBookAvailabilityByIdAndName(book.getBook_id(), book.getTitle());
-		}
-
+		
+		list = librarian_service.getBookAvailabilityByIdAndName(book_and_author.getBook().getBook_id(),
+				book_and_author.getBook().getTitle(), book_and_author.getAuthor().getAuthor_name());
 		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
 		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
@@ -87,22 +82,7 @@ public class MainController {
 		return mv;
 	}
 	
-	@RequestMapping(value = "/book/searchingBookByAuthor", method = RequestMethod.POST)
-	public ModelAndView onSearchingBookByAuthor(
-			@ModelAttribute("author") @Valid BookAuthorsImpl author,
-			BindingResult result, Model model) throws IllegalStateException,
-			IOException {
-		if (result.hasErrors()) {
-			model.addAllAttributes(result.getModel());
-			ModelAndView mv = new ModelAndView("book/bookAvailabilityList");
-			return mv;
-		}
-		List<Object[]> list = librarian_service.getBookAvailabilityByAuthor(author.getAuthor_name());
-		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
-		mv.addObject("output", "Listing Available Books");
-		mv.addObject("custom", list);
-		return mv;
-	}
+
 
 	@RequestMapping(value = "/book/bookcheckin", method = RequestMethod.GET)
 	public ModelAndView bookcheckin() {
@@ -173,9 +153,9 @@ public class MainController {
 		String last_name = request.getParameter("lname");
 		List<Object[]> list =librarian_service.getIssuedBook(book_id, card_no, first_name, last_name);
 		System.out.println("List size is : " + list.size());
-		List<bookdisplay> bookdisp = new ArrayList<bookdisplay>();
+		List<BookLoanBorrowerRelation> bookdisp = new ArrayList<BookLoanBorrowerRelation>();
 		for (Object result[] : list) {
-				bookdisplay bs = new bookdisplay();
+				BookLoanBorrowerRelation bs = new BookLoanBorrowerRelation();
 				bs.setBook_id(String.valueOf(result[0]));
 				bs.setBranch_id(String.valueOf(result[1]));
 				bs.setCard_no(Integer.valueOf(String.valueOf(result[2])));
@@ -184,7 +164,6 @@ public class MainController {
 				bs.setDate_out(Date.valueOf(String.valueOf(result[5])));
 				bs.setDue_date(Date.valueOf(String.valueOf(result[6])));
 				bookdisp.add(bs);
-				System.out.println(bs.toString());
 		  }
 		
 		ModelAndView mv = new ModelAndView("/book/bookCheckoutList");

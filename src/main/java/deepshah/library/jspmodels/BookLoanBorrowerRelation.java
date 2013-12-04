@@ -2,7 +2,7 @@ package deepshah.library.jspmodels;
 
 import java.util.Date;
 
-public class bookdisplay {
+public class BookLoanBorrowerRelation {
 
 	private String book_id;
 	

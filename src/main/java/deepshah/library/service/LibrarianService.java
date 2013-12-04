@@ -2,20 +2,13 @@ package deepshah.library.service;
 
 import java.util.List;
 
-import deepshah.library.jspmodels.bookdisplay;
+import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
 
 public interface LibrarianService {
 
-	List<Object[]> getBookAvailabilityByName(String book_title);
-
-	List<Object[]> getBookAvailabilityById(String book_id);
-
-	List<Object[]> getBookAvailabilityByAuthor(String book_author);
-
-	List<Object[]> getBookAvailabilityByIdAndName(String book_id, String title);
 
 	boolean checkinNewBook(BookLoans newBook);
 
@@ -47,5 +40,8 @@ public interface LibrarianService {
 
 	List<Object[]> getIssuedBook(String bookId, String cardNo, String fName,
 			String lName);
+
+	List<Object[]> getBookAvailabilityByIdAndName(String book_id, String title,
+			String author);
 
 }

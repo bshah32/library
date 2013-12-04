@@ -11,7 +11,7 @@ import deepshah.library.dao.BookLoansDAO;
 import deepshah.library.dao.BorrowerDAO;
 import deepshah.library.dao.CustomDAO;
 import deepshah.library.dao.LibraryBranchDAO;
-import deepshah.library.jspmodels.bookdisplay;
+import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
@@ -34,39 +34,13 @@ public class LibrarianServiceImpl implements LibrarianService{
 
 	@Autowired
 	BookDAO book_dao;
-
+	
 	@Override
-	public List<Object[]> getBookAvailabilityByName(String book_title){
-		List<Object[]> books= custom_dao.getByTitle(book_title);	
+	public List<Object[]> getBookAvailabilityByIdAndName(String book_id,String title,String author){
+		List<Object[]> books= custom_dao.getByIdTitleAuthor(book_id, title,author);	
 	return 	books;
 	}
 	
-	@Override
-	public List<Object[]> getBookAvailabilityById(String book_id){
-		List<Object[]> books = null;
-		try {
-		books= custom_dao.getById(book_id);
-		
-		}catch(SQLException e){
-		e.printStackTrace();	
-		}
-		catch(Exception e){
-			e.printStackTrace();	
-			}
-		return 	books;
-	}
-	
-	@Override
-	public List<Object[]> getBookAvailabilityByIdAndName(String book_id,String title){
-		List<Object[]> books= custom_dao.getByIdAndTitle(book_id, title);	
-	return 	books;
-	}
-	
-	@Override
-	public List<Object[]> getBookAvailabilityByAuthor(String book_author){
-		List<Object[]> books= custom_dao.getByAuthor(book_author);	
-	return 	books;
-	}
 	
 	@Override
 	public boolean checkinNewBook(BookLoans newBook){
