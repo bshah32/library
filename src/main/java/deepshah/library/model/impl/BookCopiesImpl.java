@@ -2,6 +2,7 @@ package deepshah.library.model.impl;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,21 +23,21 @@ public class BookCopiesImpl implements BookCopies, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "book_id", nullable = false, length = 15)
+	@Column(name = "book_id", nullable = false, columnDefinition="varchar(15) default ''")
 	private String book_id;
 
 	@Id
-	@Column(name = "branch_id", nullable = false)
+	@Column(name = "branch_id", nullable = false,columnDefinition="int(5) default '0'")
 	private int branch_id;
 
 	@Column(name = "no_of_copies")
 	private int no_of_copies;
 
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookcopies;
 
-	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl librarybranch_bookcopies;
 

@@ -6,7 +6,7 @@ import deepshah.library.model.LibraryBranch;
 
 public interface LibraryBranchDAO {
 
-	void insert(LibraryBranch branch);
+	boolean insert(LibraryBranch branch);
 
 	LibraryBranch update(LibraryBranch branch);
 
@@ -17,4 +17,12 @@ public interface LibraryBranchDAO {
 	public List<LibraryBranch> getAllBranches();
 
 	LibraryBranch find(int branch_id);
+
+	boolean isNameExists(String branch_name);
+
+	void remove(int branchId);
+
+	int fetchMaxBranchId();
+
+	List<LibraryBranch> searchBranchByQuery(LibraryBranch branch);
 }

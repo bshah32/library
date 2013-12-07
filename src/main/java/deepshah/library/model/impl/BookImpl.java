@@ -2,6 +2,7 @@ package deepshah.library.model.impl;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -26,19 +27,19 @@ import deepshah.library.model.Book;
 public class BookImpl implements Book {
 
 	@Id
-	@Column(name = "book_id", nullable = false, length = 15)
+	@Column(name = "book_id", nullable = false,columnDefinition="varchar(15) default ''")
 	private String book_id;
 
 	@Column(name = "title", length = 100)
 	private String title;
 
-	@OneToMany(mappedBy = "book_id", targetEntity = BookAuthorsImpl.class)
+	@OneToMany(mappedBy = "book_id", targetEntity = BookAuthorsImpl.class,cascade={CascadeType.ALL})
 	Set<BookAuthorsImpl> authors_set;
 
-	@OneToMany(mappedBy = "book_id", targetEntity = BookCopiesImpl.class)
+	@OneToMany(mappedBy = "book_id", targetEntity = BookCopiesImpl.class,cascade={CascadeType.ALL})
 	Set<BookCopiesImpl> book_copies_set;
 
-	@OneToMany(mappedBy = "book_id", targetEntity = BookLoansImpl.class)
+	@OneToMany(mappedBy = "book_id", targetEntity = BookLoansImpl.class,cascade={CascadeType.ALL})
 	Set<BookLoansImpl> bookloans_set;
 
 	@Override

@@ -3,6 +3,8 @@ package deepshah.library.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
+import javassist.bytecode.stackmap.Liveness;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
+import deepshah.library.model.impl.LibraryBranchImpl;
 import deepshah.library.service.LibrarianService;
 
 @Service
@@ -77,6 +80,7 @@ public class LibrarianServiceImpl implements LibrarianService{
 	public Borrower searchBorrower(String card_no){
 		return borrower_dao.find(card_no);	
 	}
+	
 	@Override
 	public void removeBorrower(String card_no){
 		borrower_dao.remove(card_no);	
@@ -124,6 +128,60 @@ public class LibrarianServiceImpl implements LibrarianService{
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean insertBranch(LibraryBranch branch){
+		return library_branch_dao.insert(branch);
+	}
+	
+	@Override
+	public LibraryBranch searchBranch(int branchId){
+		return library_branch_dao.find(branchId);
+	}
+	
+	@Override
+	public boolean searchBranch(LibraryBranch branch){
+		return library_branch_dao.isExist(branch);
+	}
+	
+	@Override
+	public List<LibraryBranch> searchSelectedBranch(LibraryBranch branch){
+		return library_branch_dao.searchBranchByQuery(branch);
+	}
+	
+	@Override
+	public boolean searchBranchByName(String branch_name){
+		return library_branch_dao.isNameExists(branch_name);
+	}
+	
+	@Override
+	public LibraryBranch updateBranch(LibraryBranch branch){
+		LibraryBranch updatedbranch = library_branch_dao.update(branch);
+		return updatedbranch;
+	}
+	
+	@Override
+	public List<LibraryBranch> fetchAllBranches(){
+		List<LibraryBranch> allbranch = library_branch_dao.getAllBranches();
+		return allbranch;
+	}
+	
+	@Override
+	public void deleteBranch(int branch_id){
+		System.out.println(branch_id);
+		library_branch_dao.remove(branch_id); 
+	}
+
+
+	@Override
+	public int getMaxCardNo() {
+		return borrower_dao.fetchMaxCardId();
+	}
+	
+	@Override
+	public int getMaxBranchNo() {
+		return library_branch_dao.fetchMaxBranchId();
 	}
 	
 }

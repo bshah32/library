@@ -3,6 +3,7 @@ package deepshah.library.model.impl;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.Cascade;
 
 import deepshah.library.model.Borrower;
 import deepshah.library.validator.Phone;
@@ -27,27 +30,28 @@ public class BorrowerImpl implements Borrower {
 
 	@Id
 	@NotNull @Size(min=1,max=10, message="Card No cannot be empty and should be less than 10")
-	@Column(name = "card_no", nullable = false, length = 10)
+	@Column(name = "card_no", nullable = false,columnDefinition="varchar(10) default ''")
 	private String card_no;
 
-	@NotNull @Size(min=1,max=25, message="First Name cannot be empty and should be less than 25")
+	@Size(min=1,max=25, message="First Name cannot be empty and should be less than 25")
 	@Column(name = "fname", length = 25)
 	private String fname;
 
-	@NotNull @Size(min=1,max=25, message="Last Name cannot be empty and should be less than 25")
+	@Size(min=1,max=25, message="Last Name cannot be empty and should be less than 25")
 	@Column(name = "lname", length = 25)
 	private String lname;
 
-	@NotNull @Size(min=1,max=35, message="Address cannot be empty and should be less than 35")
+	@Size(min=1,max=35, message="Address cannot be empty and should be less than 35")
 	@Column(name = "address", length = 35)
 	private String address;
 
-	@NotNull @Size(min=10,max=15, message="Phone Number cannot be empty and should be between 10 to 15")
+	@Size(min=10,max=15, message="Phone Number cannot be empty and should be between 10 to 15")
 	@Phone
 	@Column(name = "phone", length = 15)
 	private String phone;
 
-	@OneToMany(mappedBy = "card_no", targetEntity = BookLoansImpl.class)
+	
+	@OneToMany(mappedBy = "card_no", targetEntity = BookLoansImpl.class, cascade={CascadeType.ALL})
 	Set<BookLoansImpl> book_loans_set;
 
 	@Override

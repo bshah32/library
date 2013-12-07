@@ -44,4 +44,24 @@ public interface LibrarianService {
 	List<Object[]> getBookAvailabilityByIdAndName(String book_id, String title,
 			String author);
 
+	boolean insertBranch(LibraryBranch branch);
+
+	boolean searchBranch(LibraryBranch branch);
+
+	LibraryBranch updateBranch(LibraryBranch branch);
+
+	List<LibraryBranch> fetchAllBranches();
+
+	boolean searchBranchByName(String branch_name);
+
+	void deleteBranch(int branch_id);
+
+	LibraryBranch searchBranch(int branchId);
+
+	int getMaxCardNo();
+
+	int getMaxBranchNo();
+
+	List<LibraryBranch> searchSelectedBranch(LibraryBranch branch);
+	
 }

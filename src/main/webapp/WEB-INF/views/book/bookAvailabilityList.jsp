@@ -126,16 +126,41 @@ body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li ><a
+							<li><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookavailability'>Book
+								<li class="dropdown"><a href="#" class="dropdown-toggle active"
+								data-toggle="dropdown">Book <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
 									Checkin</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckout'>Book
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
-							<li><a href='${pageContext.request.contextPath}/borrower/addborrower'>Add
+								</ul>
+							</li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Borrower <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
+								</ul>
+							</li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Branch <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/branch/insertbranch'>Add
+									Branch</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/branch/listallbranch'>View All
+									Branches</a></li>
+								</ul>
+								</li>
 						</ul>
 					</div>
 				</div>
@@ -153,7 +178,8 @@ body {
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-				<table class="table table-hover">
+			<div class="table-responsive">
+				<table class="table table-hover table-striped table-bordered table-condensed">
 					<thead>
 						<tr>
 							<th>Book Id</th>
@@ -189,17 +215,7 @@ body {
 						</c:forEach>
 					</tbody>
 				</table>
-				<!-- <div class="pagination pagination-right">
-					<ul>
-						<li><a href="#"> &laquo; </a></li>
-						<li><a href="#">1</a></li>
-						<li><a href="#">2</a></li>
-						<li><a href="#">3</a></li>
-						<li><a href="#">4</a></li>
-						<li><a href="#">5</a></li>
-						<li><a href="#"> &raquo; </a></li>
-					</ul>
-				</div> -->
+				</div>
 			</div>
 		</div>
 

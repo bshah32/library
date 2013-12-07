@@ -26,6 +26,8 @@ public interface BorrowerDAO {
 
 	int countNoOfBookByBorrower(Borrower borrower);
 
+	int fetchMaxCardId();
+
 //	Borrower selectABorrower(Borrower borrower);
 
 }

@@ -2,6 +2,7 @@ package deepshah.library.model.impl;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,14 +24,15 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name = "book_id", nullable = false,columnDefinition="varchar(15) default ''")
 	private String book_id;
 
 	@Id
-	@Column(name = "author_name", nullable = false, length = 30)
+	@Column(name = "author_name",length = 30,columnDefinition="varchar(30) default ''")
 	private String author_name;
 
 	
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book;
 

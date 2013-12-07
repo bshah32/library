@@ -1,6 +1,5 @@
 package deepshah.library.dao.impl;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,7 +9,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 import deepshah.library.dao.CustomDAO;
-import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 
 @Repository
 public class CustomDAOImpl implements CustomDAO{

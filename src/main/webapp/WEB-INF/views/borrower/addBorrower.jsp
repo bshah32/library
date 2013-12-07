@@ -124,16 +124,41 @@ body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li ><a
+							<li><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookavailability'>Book
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Book <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
 									Checkin</a></li>
-							<li><a href='${pageContext.request.contextPath}/book/bookcheckout'>Book
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
-							<li class="active"><a href='${pageContext.request.contextPath}/borrower/addborrower'>Add
+								</ul>
+							</li>
+								<li class="dropdown active"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Borrower <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
+								</ul>
+							</li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Branch <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+								href='${pageContext.request.contextPath}/branch/insertbranch'>Add
+									Branch</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/branch/listallbranch'>View All
+									Branches</a></li>
+								</ul>
+								</li>
 						</ul>
 					</div>
 				</div>
@@ -157,7 +182,7 @@ body {
 					<div class="control-group">
 						<form:label cssClass="control-label" path="card_no">Card Number</form:label>
 						<div class="controls">
-								<form:input path="card_no" placeholder="Card Number" />
+								<form:input path="card_no" placeholder="Card Number" readonly="true" />
 							 <font color="red"><form:errors  cssClass="error" path="card_no" /> </font>
 						</div>
 					</div>

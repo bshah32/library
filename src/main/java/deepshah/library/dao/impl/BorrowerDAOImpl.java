@@ -1,17 +1,16 @@
 package deepshah.library.dao.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import deepshah.library.dao.BorrowerDAO;
-import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.impl.BookLoansImpl;
 import deepshah.library.model.impl.BorrowerImpl;
@@ -107,7 +106,19 @@ public class BorrowerDAOImpl implements BorrowerDAO {
 		return fetchedBooks.size();
 	}
 	
-	
+	@Override
+	public int fetchMaxCardId(){
+		int max_card_no = 0;
+		Query query = entityManager.createNativeQuery("select MAX(card_no) from borrower");
+		String output = String.valueOf(query.getSingleResult());
+		if((output.equals("null") )|| (output.equals(""))){
+		 return 0;
+		}
+		max_card_no =  Integer.valueOf(output);
+		 System.out.println(max_card_no);
+		return max_card_no ;
+	}
+		
 	
 
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,21 +42,20 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "book_id", nullable = false, length = 15)
+	@Column(name = "book_id", nullable = false, columnDefinition="varchar(15) default ''")
 	@NotNull 
 	@Size(min=1,max=15, message="Book ID cannot be empty and should be less than 15")
 	private String book_id;
 
 	@Id
-	@Column(name = "branch_id", nullable = false)
+	@Column(name = "branch_id", nullable = false,columnDefinition="int(5) default '0'")
 	@NotNull
 	@NumberFormat(style=Style.NUMBER)
 	@Min(1)
-	@Max(5)
-	private int branch_id = 1;
+	private int branch_id;
 
 	@Id
-	@Column(name = "card_no", nullable = false, length = 10)
+	@Column(name = "card_no", nullable = false, columnDefinition="varchar(10) default ''")
 	@NotNull @Size(min=1,max=10, message="Card No cannot be empty and should be less than 10")
 	private String card_no;
 
@@ -66,15 +66,15 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private Date due_date = addDays(today_date,14);
 	
 	
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookloans;
 
-	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl library_bookloans;
 
-	@ManyToOne(targetEntity = BorrowerImpl.class, fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = BorrowerImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
 	@JoinColumn(name = "card_no", referencedColumnName = "card_no")
 	private BorrowerImpl borrower_bookloans;
 

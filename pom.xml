@@ -175,10 +175,24 @@
 			<version>1.2</version>
 		</dependency>
 
+		<!-- MYSQL Connector -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.17</version>
+		</dependency>
+		
+		<!-- Apache Tiles 3.0.3 -->
+		<dependency>
+			<groupId>org.apache.tiles</groupId>
+			<artifactId>tiles-jsp</artifactId>
+			<version>3.0.3</version>
+		</dependency>
+            <!-- iText Library for pdf generation -->
+		<dependency>
+			<groupId>com.lowagie</groupId>
+			<artifactId>itext</artifactId>
+			<version>2.1.7</version>
 		</dependency>
 		<!-- DBCP -->
 		<dependency>

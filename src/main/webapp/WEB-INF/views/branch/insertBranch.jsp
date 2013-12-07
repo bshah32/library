@@ -117,15 +117,16 @@ body {
 <body>
 
 	<div class="container">
+
 		<div class="masthead">
 			<h3 class="muted">Library Project</h3>
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li><a
+							<li class="active"><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle active"
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Book <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
@@ -138,7 +139,7 @@ body {
 								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
 								</ul>
-							</li>
+								</li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Borrower <b class="caret"></b></a>
 								<ul class="dropdown-menu">
@@ -146,8 +147,8 @@ body {
 								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
 								</ul>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								</li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Branch <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
@@ -167,49 +168,49 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Status : </strong> <c:out value="${status}"></c:out>
+			</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-			<div class="table-responsive">
-					<table class="table table-hover table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>Card No</th>
-							<th>Book Id</th>
-							<th>Branch Id</th>
-							<th>Due Date</th>
-							<th>Date Out</th>
-							<th>Checkout</th>
-						</tr>
-					<thead>
-					<tbody>
-						<c:forEach items="${book_loans_model}" var="bookLoanModel">
-
-							<tr>
-								<td>${bookLoanModel.book_id}</td>
-								<td>${bookLoanModel.branch_id}</td>
-								<td>${bookLoanModel.card_no}</td>
-								<td>${bookLoanModel.due_date}</td>
-								<td>${bookLoanModel.date_out}</td>
-								<td>
-								<%-- <a
-									href='${pageContext.request.contextPath}/book/info/${bookLoanModel}'>
-										<i class="icon-edit"></i>
-								</a> &nbsp; --%> <a
-									href='${pageContext.request.contextPath}/book/onBookCheckout/${bookLoanModel.book_id}/${bookLoanModel.branch_id}/${bookLoanModel.card_no}'>
-										<i class="icon-trash"></i>
-								</a></td>
-
-							</tr>
-
-						</c:forEach>
-					</tbody>
-				</table>	
-			</div>	
+				<form:form method="post" modelAttribute="library_branch_model"
+					action="${pageContext.request.contextPath}/branch/onaddingbranch"
+					cssClass="form-horizontal">
+					<div class="control-group">
+						<form:label cssClass="control-label" path="branch_id">Branch Id</form:label>
+						<div class="controls">
+							<form:input path="branch_id" placeholder="Branch Id" readonly="true"/>
+							 <font color="red"><form:errors path="branch_id" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<form:label cssClass="control-label" path="branch_name">Branch Name</form:label>
+						<div class="controls">
+							<form:input path="branch_name" placeholder="Branch Name" />
+							 <font color="red"><form:errors path="branch_name" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<form:label cssClass="control-label" path="address">Address</form:label>
+						<div class="controls">
+							<form:input path="address" placeholder="Address" />
+							<font color="red"><form:errors path="address" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn btn-primary" type="submit">Submit</button>
+							<button type="reset" class="btn">Reset</button>
+						</div>
+					</div>
+				</form:form>
 			</div>
 		</div>
 		<hr>
+
 		<div class="footer">
 			<p>&copy; Deep Shah</p>
 		</div>
