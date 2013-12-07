@@ -146,6 +146,9 @@ body {
 									<li><a
 								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
+									Borrower</a></li>
 								</ul>
 							</li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"

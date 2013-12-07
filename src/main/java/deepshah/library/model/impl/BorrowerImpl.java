@@ -21,11 +21,7 @@ import deepshah.library.validator.Phone;
 
 @Entity
 @Table(name = "borrower")
-@NamedQueries({ @NamedQuery(name = "fetchAllBorrowersQuery", query = "SELECT b FROM BorrowerImpl b")
-// ,
-// @NamedQuery(name="deleteBookByIdQuery",
-// query="DELETE b FROM JPABookImpl b WHERE b.bookId =:bookId")
-})
+@NamedQueries({ @NamedQuery(name = "getAllBorrower", query = "SELECT c FROM BorrowerImpl c"),})
 public class BorrowerImpl implements Borrower {
 
 	@Id

@@ -66,15 +66,15 @@ public class BookLoansImpl implements BookLoans, Serializable {
 	private Date due_date = addDays(today_date,14);
 	
 	
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookloans;
 
-	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl library_bookloans;
 
-	@ManyToOne(targetEntity = BorrowerImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = BorrowerImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "card_no", referencedColumnName = "card_no")
 	private BorrowerImpl borrower_bookloans;
 

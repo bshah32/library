@@ -146,6 +146,9 @@ body {
 									<li><a
 								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
+									Borrower</a></li>
 								</ul>
 							</li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -200,8 +203,8 @@ body {
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button class="btn btn-primary" type="submit">Submit</button>
-							<button type="reset" class="btn">Reset</button>
+							<button class="btn btn-primary" name="submitbutton" value="search" type="submit">Search</button>
+							<button class="btn btn-primary" name="submitbutton" value="pdf" type="submit">Open In PDF</button>
 						</div>
 					</div>
 				</form:form>

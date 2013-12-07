@@ -13,38 +13,39 @@ import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.FontFactory;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.Phrase;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfAction;
 import com.lowagie.text.pdf.PdfDestination;
-import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfWriter;
 
-import deepshah.library.model.LibraryBranch;
 
-
-public class BranchListView extends AbstractPdfView {
+public class BookAvailabilityListView  extends AbstractPdfView{
 
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model,
 			Document document, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
-		List<LibraryBranch> list =  (List<LibraryBranch>) model.get("library_branch_model");
-		Paragraph title = new Paragraph("Branch Details",FontFactory.getFont(FontFactory.TIMES_BOLD, 16,Font.BOLD));
+		List<Object[]> list =  (List<Object[]>) model.get("custom");
+		System.out.println("List size is : " + list.size());
+		Paragraph title = new Paragraph("Available Book Details",FontFactory.getFont(FontFactory.TIMES_BOLD, 16,Font.BOLD));
 				title.setAlignment(Element.ALIGN_CENTER);
 				document.add(title);
-         
-	        Table table = new Table(3);
+			Table table = new Table(7);
+	        table.addCell("Book Id");
+	        table.addCell("Book Name");
 	        table.addCell("Branch Id");
 	        table.addCell("Branch Name");
-	        table.addCell("Address");
+	        table.addCell("Number of Copies");
+	        table.addCell("Books Issued");
+	        table.addCell("Books Available");
 	        table.setPadding(5);
-	          for (LibraryBranch result : list) {
-	    			table.addCell(String.valueOf(result.getBranch_id()));
-	  				table.addCell(String.valueOf(result.getBranch_name()));
-	  				table.addCell(String.valueOf(result.getAddress()));
-	  			}
+	        for (Object[] result : list) {
+				for(int i = 0; i<result.length;i++){
+					table.addCell(String.valueOf(result[i]));
+				}
+			  }
+	          
 	  		document.add(table);
 	     
 		// to open the PDF in 100% zoom

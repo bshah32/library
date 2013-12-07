@@ -63,5 +63,9 @@ public interface LibrarianService {
 	int getMaxBranchNo();
 
 	List<LibraryBranch> searchSelectedBranch(LibraryBranch branch);
+
+	List<Borrower> fetchAllBorrower();
+
+	void deleteBorrower(String card_no);
 	
 }

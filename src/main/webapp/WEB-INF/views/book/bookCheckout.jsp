@@ -145,6 +145,9 @@ body {
 									<li><a
 								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 									Borrower</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
+									Borrower</a></li>
 								</ul>
 							</li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -167,6 +170,10 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Status : </strong> <c:out value="${status}"></c:out>
+			</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
@@ -198,7 +205,8 @@ body {
 					</div>
 					<div class="control-group">
 						<div class="controls">
-							<button class="btn btn-primary" type="submit">Submit</button>
+							<button class="btn btn-primary" name="submitbutton" value="search" type="submit">Search</button>
+							<button class="btn btn-primary" name="submitbutton" value="pdf" type="submit">Open In PDF</button>
 						</div>
 					</div>
 				</form>

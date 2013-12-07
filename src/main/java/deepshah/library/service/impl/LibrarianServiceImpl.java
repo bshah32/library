@@ -169,11 +169,20 @@ public class LibrarianServiceImpl implements LibrarianService{
 	
 	@Override
 	public void deleteBranch(int branch_id){
-		System.out.println(branch_id);
 		library_branch_dao.remove(branch_id); 
 	}
 
+	@Override
+	public List<Borrower> fetchAllBorrower(){
+		List<Borrower> allborrower = borrower_dao.getAllBorrower();
+		return allborrower;
+	}
 
+	@Override
+	public void deleteBorrower(String card_no){
+		borrower_dao.remove(card_no); 
+	}
+	
 	@Override
 	public int getMaxCardNo() {
 		return borrower_dao.fetchMaxCardId();

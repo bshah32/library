@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import deepshah.library.jspmodels.BookAuthorRelation;
 import deepshah.library.jspmodels.BookLoanBorrowerRelation;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
+import deepshah.library.model.LibraryBranch;
 import deepshah.library.model.impl.BookLoansImpl;
 import deepshah.library.service.LibrarianService;
 
@@ -43,7 +45,7 @@ public class BookController {
 	}
 	
 	@RequestMapping(value = "/book/searchingBookbyNameIdAuthor", method = RequestMethod.POST)
-	public ModelAndView onSearchingBookByNameAndId(
+	public ModelAndView onSearchingBookByNameAndId(@RequestParam String submitbutton,
 			@ModelAttribute("book_model") @Valid BookAuthorRelation book_and_author,
 			BindingResult result, Model model) throws IllegalStateException,
 			IOException,Exception {
@@ -62,9 +64,14 @@ public class BookController {
 			mv.addObject("status","Please enter either Book Id or Book Title or Book Author Name");
 			return mv;
 		}
-		
 		list = librarian_service.getBookAvailabilityByIdAndName(book_and_author.getBook().getBook_id(),
 				book_and_author.getBook().getTitle(), book_and_author.getAuthor().getAuthor_name());
+		
+		if(submitbutton.equalsIgnoreCase("pdf")){
+			ModelAndView mv = new ModelAndView("bookavailabilitylistview");
+			mv.getModelMap().addAttribute("custom",list);
+			return mv;
+		}
 		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
 		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
@@ -141,8 +148,18 @@ public class BookController {
 		String card_no = request.getParameter("cardno");
 		String first_name = request.getParameter("fname");
 		String last_name = request.getParameter("lname");
+		if(book_id.equals("") && card_no.equals("") && first_name.equals("") && last_name.equals("")){
+			ModelAndView mv = new ModelAndView("/book/bookCheckout");
+			mv.addObject("status","Enter any detail to Search Book");
+			return mv;
+		}
+		if(request.getParameter("submitbutton").equalsIgnoreCase("pdf")){
+			List<Object[]> list =librarian_service.getIssuedBook(book_id, card_no, first_name, last_name);
+			ModelAndView mv = new ModelAndView("bookcheckoutsearchlist");
+			mv.addObject("custom", list);
+			return mv;
+		}
 		List<Object[]> list =librarian_service.getIssuedBook(book_id, card_no, first_name, last_name);
-		System.out.println("List size is : " + list.size());
 		List<BookLoanBorrowerRelation> bookdisp = new ArrayList<BookLoanBorrowerRelation>();
 		for (Object result[] : list) {
 				BookLoanBorrowerRelation bs = new BookLoanBorrowerRelation();
@@ -186,6 +203,32 @@ public class BookController {
 		librarian_service.checkoutOldBook(book);
 		return "redirect:/book/bookcheckout";
 	}
-
+	
+	@RequestMapping("book/bookavailabilitylistview/openInPDF")
+	public ModelAndView beanToPdf(@ModelAttribute("book_model") @Valid BookAuthorRelation book_and_author,
+			BindingResult result, Model model) throws IllegalStateException,
+			IOException,Exception{
+		List<Object[]> list = null;
+		if (result.hasErrors()) {
+			model.addAllAttributes(result.getModel());
+			ModelAndView mv = new ModelAndView("book/bookAvailability");
+			return mv;
+		}
+		
+		if(book_and_author.getBook().getBook_id() == "" && book_and_author.getBook().getTitle()=="" 
+				&& book_and_author.getAuthor().getAuthor_name() == ""){
+			ModelAndView mv = new ModelAndView("book/bookAvailability");
+			mv.addObject("output", "Search Book");
+			mv.addObject("model", new BookAuthorRelation());
+			mv.addObject("status","Please enter either Book Id or Book Title or Book Author Name");
+			return mv;
+		}
+		
+		list = librarian_service.getBookAvailabilityByIdAndName(book_and_author.getBook().getBook_id(),
+				book_and_author.getBook().getTitle(), book_and_author.getAuthor().getAuthor_name());
+		ModelAndView mv = new ModelAndView("bookavailabilitylistview");
+		mv.getModelMap().addAttribute("custom",list);
+		return mv;
+	}
 	
 }

@@ -1,6 +1,7 @@
 package deepshah.library.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Set;
 
 import deepshah.library.model.Borrower;
@@ -27,6 +28,8 @@ public interface BorrowerDAO {
 	int countNoOfBookByBorrower(Borrower borrower);
 
 	int fetchMaxCardId();
+
+	List<Borrower> getAllBorrower();
 
 //	Borrower selectABorrower(Borrower borrower);
 

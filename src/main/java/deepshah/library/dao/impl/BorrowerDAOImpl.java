@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import deepshah.library.dao.BorrowerDAO;
 import deepshah.library.model.Borrower;
+import deepshah.library.model.LibraryBranch;
 import deepshah.library.model.impl.BookLoansImpl;
 import deepshah.library.model.impl.BorrowerImpl;
+import deepshah.library.model.impl.LibraryBranchImpl;
 
 @Repository
 public class BorrowerDAOImpl implements BorrowerDAO {
@@ -118,7 +120,14 @@ public class BorrowerDAOImpl implements BorrowerDAO {
 		 System.out.println(max_card_no);
 		return max_card_no ;
 	}
-		
+
+	@Override
+	public List<Borrower> getAllBorrower() {
+		 TypedQuery<Borrower> query = entityManager.createNamedQuery("getAllBorrower", Borrower.class);
+		 List borrowers = query.getResultList();
+		 return borrowers;
+		 
+	}
 	
 
 }

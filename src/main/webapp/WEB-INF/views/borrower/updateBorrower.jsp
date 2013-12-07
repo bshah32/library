@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+c<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
@@ -124,7 +124,7 @@ body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li><a
+							<li class="active"><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Book <b class="caret"></b></a>
@@ -139,8 +139,8 @@ body {
 								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
 								</ul>
-							</li>
-								<li class="dropdown active"><a href="#" class="dropdown-toggle"
+								</li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Borrower <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
@@ -150,8 +150,8 @@ body {
 								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
 									Borrower</a></li>
 								</ul>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								</li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Branch <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
@@ -171,7 +171,7 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
-			<div class="alert">
+		<div class="alert">
   				<button type="button" class="close" data-dismiss="alert">&times;</button>
   				<strong>Status : </strong> <c:out value="${status}"></c:out>
 			</div>
@@ -180,47 +180,41 @@ body {
 		<div class="row-fluid">
 			<div class="span12">
 				<form:form method="post" modelAttribute="borrower_model"
-					action="${pageContext.request.contextPath}/book/onaddingBorrower"
+					action="${pageContext.request.contextPath}/borrower/onupdatingborrower"
 					cssClass="form-horizontal">
 					<div class="control-group">
-						<form:label cssClass="control-label" path="card_no">Card Number</form:label>
+						<form:label cssClass="control-label" path="card_no">Card No</form:label>
 						<div class="controls">
-								<form:input path="card_no" placeholder="Card Number" readonly="true" />
-							 <font color="red"><form:errors  cssClass="error" path="card_no" /> </font>
+							<form:input path="card_no"  placeholder="Card No" readonly="true"/>
+							 <font color="red"><form:errors path="card_no" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
 						<form:label cssClass="control-label" path="fname">First Name</form:label>
 						<div class="controls">
-							<form:input path="fname" placeholder="First Name" />
+							<form:input path="fname"  placeholder="First Name" />
 							 <font color="red"><form:errors path="fname" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
 						<form:label cssClass="control-label" path="lname">Last Name</form:label>
 						<div class="controls">
-							<form:input path="lname" placeholder="Last Name" />
-							<font color="red"><form:errors path="lname" /> </font>
+							<form:input path="lname"  placeholder="Last Name" />
+							 <font color="red"><form:errors path="lname" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
 						<form:label cssClass="control-label" path="address">Address</form:label>
 						<div class="controls">
-							<form:input path="address" placeholder="Address" />
+							<form:input path="address"  placeholder="Address" />
 							<font color="red"><form:errors path="address" /> </font>
 						</div>
 					</div>
 					<div class="control-group">
-						<form:label cssClass="control-label" path="phone">Phone Number</form:label>
+						<form:label cssClass="control-label" path="phone">Phone</form:label>
 						<div class="controls">
-							<form:input path="phone" placeholder="number" />
+							<form:input path="phone"  placeholder="Phone" />
 							<font color="red"><form:errors path="phone" /> </font>
-						</div>
-					</div>
-					<div class="control-group">
-						<div class="controls">
-							<button class="btn btn-primary" type="submit">Submit</button>
-							<button type="reset" class="btn">Reset</button>
 						</div>
 					</div>
 				</form:form>

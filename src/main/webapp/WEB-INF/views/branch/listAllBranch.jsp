@@ -144,6 +144,9 @@ body {
 									<li><a
 										href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 											Borrower</a></li>
+											<li><a
+								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
+									Borrower</a></li>
 								</ul></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Branch <b class="caret"></b></a>
@@ -174,7 +177,7 @@ body {
 		<div class="row-fluid">
 			<div class="span12">
 				<div class="table-responsive">
-				<a href="${pageContext.request.contextPath}/branch/branchlistview/openInPDF">open pdf</a>
+				<a href="${pageContext.request.contextPath}/branch/branchlistview/openInPDF"><b>Show In PDF</b></a>
 					<table class="table table-hover table-striped table-bordered table-condensed">
 						<thead>
 							<tr>

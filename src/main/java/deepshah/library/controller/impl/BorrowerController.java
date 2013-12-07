@@ -1,6 +1,7 @@
 package deepshah.library.controller.impl;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityExistsException;
 import javax.validation.Valid;
@@ -10,12 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import deepshah.library.model.Borrower;
+import deepshah.library.model.LibraryBranch;
 import deepshah.library.model.impl.BorrowerImpl;
+import deepshah.library.model.impl.LibraryBranchImpl;
 import deepshah.library.service.LibrarianService;
 
 @Controller
@@ -69,5 +73,41 @@ public class BorrowerController {
 		}
 		}
 	return mv;
+	}
+	
+	@RequestMapping(value = "/borrower/listBorrower")
+	public ModelAndView viewAllBorrower() {
+		ModelAndView mv = new ModelAndView("/borrower/listAllBorrower");
+		List<Borrower> list = librarian_service.fetchAllBorrower();
+		mv.addObject("borrower_model",list);
+		mv.addObject("status","There are total "+String.valueOf(list.size())+" Borrower in library");
+		return mv;
+	}
+	@RequestMapping(value = "/borrower/onborrowerdelete/{card_no}", method = RequestMethod.GET)
+	public String deleteBranch(@PathVariable("card_no") String card_no) throws Exception {
+		librarian_service.deleteBorrower(card_no);
+		return "redirect:/borrower/listBorrower";
+	}
+	
+	@RequestMapping(value = "/borrower/editborrower", method = RequestMethod.GET)
+	public String updateBranch() {
+		return "branch/updateBorrower";
+	}
+	
+	@RequestMapping(value = "/borrower/onborrowerupdate/{card_no}", method = RequestMethod.GET)
+	public ModelAndView borrowerUpdate(@PathVariable("card_no") String cardNo) throws Exception{
+		System.out.println(cardNo);
+		Borrower borrower = librarian_service.searchBorrower(cardNo);
+		ModelAndView mv = new ModelAndView("/borrower/updateBorrower");
+		mv.addObject("borrower_model",borrower); 
+		return mv;
+	}
+	
+	@RequestMapping("/borrower/borrowerlistview/openInPDF")
+	public ModelAndView beanToPdf() {
+		ModelAndView mv = new ModelAndView("borrowerlistview");
+		List<Borrower> list = librarian_service.fetchAllBorrower();
+		mv.getModelMap().addAttribute("borrower_model",list);
+		return mv;
 	}
 }
