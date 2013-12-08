@@ -33,11 +33,11 @@ public class BookCopiesImpl implements BookCopies, Serializable {
 	@Column(name = "no_of_copies")
 	private int no_of_copies;
 
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book_bookcopies;
 
-	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = LibraryBranchImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "branch_id", referencedColumnName = "branch_id")
 	private LibraryBranchImpl librarybranch_bookcopies;
 

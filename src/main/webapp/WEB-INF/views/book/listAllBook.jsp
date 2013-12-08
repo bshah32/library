@@ -123,47 +123,44 @@ body {
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li><a
-								href='${pageContext.request.contextPath}/'>Home</a></li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle active"
-								data-toggle="dropdown">Book <b class="caret"></b></a>
+							<li><a href='${pageContext.request.contextPath}/'>Home</a></li>
+							<li class="dropdown"><a href="#"
+								class="dropdown-toggle active" data-toggle="dropdown">Book <b
+									class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a
+										href='${pageContext.request.contextPath}/book/bookavailability'>Book
+											Availability</a></li>
+									<li><a
+										href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+											Checkin</a></li>
+									<li><a
+										href='${pageContext.request.contextPath}/book/bookcheckout'>Book
+											Checkout</a></li>
+								</ul></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown">Borrower <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 								<li><a
 										href='${pageContext.request.contextPath}/book/listallbook'>Book
 											List</a></li>
 									<li><a
-								href='${pageContext.request.contextPath}/book/bookavailability'>Book
-									Availability</a></li>
-									<li><a
-								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
-									Checkin</a></li>
-									<li><a
-								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
-									Checkout</a></li>
-								</ul>
-							</li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown">Borrower <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a
-								href='${pageContext.request.contextPath}/borrower/addborrower'>Add
-									Borrower</a></li>
-									<li><a
+										href='${pageContext.request.contextPath}/borrower/addborrower'>Add
+											Borrower</a></li>
+											<li><a
 								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
 									Borrower</a></li>
-								</ul>
-							</li>
+								</ul></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Branch <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
-								href='${pageContext.request.contextPath}/branch/insertbranch'>Add
-									Branch</a></li>
+										href='${pageContext.request.contextPath}/branch/insertbranch'>Add
+											Branch</a></li>
 									<li><a
-								href='${pageContext.request.contextPath}/branch/listallbranch'>View All
-									Branches</a></li>
-								</ul>
-								</li>
+										href='${pageContext.request.contextPath}/branch/listallbranch'>View
+											All Branches</a></li>
+								</ul></li>
 						</ul>
 					</div>
 				</div>
@@ -173,50 +170,42 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<strong>Status : </strong>
+			<c:out value="${status}"></c:out>
+		</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-			<div class="table-responsive">
+				<div class="table-responsive">
+				<a href="${pageContext.request.contextPath}/book/booklistview/openInPDF"><b>Show In PDF</b></a>
 					<table class="table table-hover table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>Book Id</th>
-							<th>Branch Id</th>
-							<th>Card No</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Due Date</th>
-							<th>Date Out</th>
-							<th>Checkout</th>
-						</tr>
-					<thead>
-					
-					<tbody>
-						<c:forEach items="${book_loans_model}" var="bookLoanModel">
-
+						<thead>
 							<tr>
-								<td>${bookLoanModel.book_id}</td>
-								<td>${bookLoanModel.branch_id}</td>
-								<td>${bookLoanModel.card_no}</td>
-								<td>${bookLoanModel.fname}</td>
-								<td>${bookLoanModel.lname}</td>
-								<td>${bookLoanModel.due_date}</td>
-								<td>${bookLoanModel.date_out}</td>
-								<td>
-								<%-- <a
-									href='${pageContext.request.contextPath}/book/info/${bookLoanModel}'>
-										<i class="icon-edit"></i>
-								</a> &nbsp; --%> <a
-									href='${pageContext.request.contextPath}/book/onSelectedBookCheckout/${bookLoanModel.book_id}/${bookLoanModel.branch_id}/${bookLoanModel.card_no}'>
-										<i class="icon-trash"></i>
-								</a></td>
-
+								<th>Book Id</th>
+								<th>Title</th>
+								<th>Update/Delete</th>
 							</tr>
+						<thead>
+						<tbody>
+							<c:forEach items="${book_model}" var="bookModel">
+								<tr>
+									<td>${bookModel.book_id}</td>
+									<td>${bookModel.title}</td>
+									<td><a
+										href='${pageContext.request.contextPath}/book/onbookupdate/${bookModel.book_id}'>
+											<i class="icon-edit"></i>
+									</a> &nbsp; <a
+										href='${pageContext.request.contextPath}/book/onbookdelete/${bookModel.book_id}'>
+											<i class="icon-trash"></i>
+									</a></td>
 
-						</c:forEach>
-					</tbody>
-				</table>		
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -226,7 +215,6 @@ body {
 		</div>
 
 	</div>
-
 	<!-- /container -->
 
 	<!-- Le javascript

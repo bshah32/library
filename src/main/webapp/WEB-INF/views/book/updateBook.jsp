@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+c<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page session="false"%>
 <!DOCTYPE html>
@@ -117,15 +117,16 @@ body {
 <body>
 
 	<div class="container">
+
 		<div class="masthead">
 			<h3 class="muted">Library Project</h3>
 			<div class="navbar">
 				<div class="navbar-inner">
 					<div class="container">
 						<ul class="nav">
-							<li><a
+							<li class="active"><a
 								href='${pageContext.request.contextPath}/'>Home</a></li>
-								<li class="dropdown"><a href="#" class="dropdown-toggle active"
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Book <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 								<li><a
@@ -141,7 +142,7 @@ body {
 								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
 								</ul>
-							</li>
+								</li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Borrower <b class="caret"></b></a>
 								<ul class="dropdown-menu">
@@ -152,8 +153,8 @@ body {
 								href='${pageContext.request.contextPath}/borrower/listBorrower'>List
 									Borrower</a></li>
 								</ul>
-							</li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								</li>
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Branch <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 									<li><a
@@ -173,60 +174,46 @@ body {
 		<h2>
 			<c:out value="${output}"></c:out>
 		</h2>
+		<div class="alert">
+  				<button type="button" class="close" data-dismiss="alert">&times;</button>
+  				<strong>Status : </strong> <c:out value="${status}"></c:out>
+			</div>
 		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
 			<div class="span12">
-			<div class="table-responsive">
-					<table class="table table-hover table-striped table-bordered table-condensed">
-					<thead>
-						<tr>
-							<th>Book Id</th>
-							<th>Branch Id</th>
-							<th>Card No</th>
-							<th>First Name</th>
-							<th>Last Name</th>
-							<th>Due Date</th>
-							<th>Date Out</th>
-							<th>Checkout</th>
-						</tr>
-					<thead>
-					
-					<tbody>
-						<c:forEach items="${book_loans_model}" var="bookLoanModel">
-
-							<tr>
-								<td>${bookLoanModel.book_id}</td>
-								<td>${bookLoanModel.branch_id}</td>
-								<td>${bookLoanModel.card_no}</td>
-								<td>${bookLoanModel.fname}</td>
-								<td>${bookLoanModel.lname}</td>
-								<td>${bookLoanModel.due_date}</td>
-								<td>${bookLoanModel.date_out}</td>
-								<td>
-								<%-- <a
-									href='${pageContext.request.contextPath}/book/info/${bookLoanModel}'>
-										<i class="icon-edit"></i>
-								</a> &nbsp; --%> <a
-									href='${pageContext.request.contextPath}/book/onSelectedBookCheckout/${bookLoanModel.book_id}/${bookLoanModel.branch_id}/${bookLoanModel.card_no}'>
-										<i class="icon-trash"></i>
-								</a></td>
-
-							</tr>
-
-						</c:forEach>
-					</tbody>
-				</table>		
-				</div>
+				<form:form method="post" modelAttribute="book_model"
+					action="${pageContext.request.contextPath}/book/onupdatingbook"
+					cssClass="form-horizontal">
+					<div class="control-group">
+						<form:label cssClass="control-label" path="book_id">Book Id</form:label>
+						<div class="controls">
+							<form:input path="book_id"  placeholder="Book Id" readonly="true"/>
+							 <font color="red"><form:errors path="book_id" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<form:label cssClass="control-label" path="title">Title</form:label>
+						<div class="controls">
+							<form:input path="title"  placeholder="Title" />
+							 <font color="red"><form:errors path="title" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn btn-primary"  value="search" type="submit">Update</button>
+						</div>
+					</div>
+					</form:form>
 			</div>
 		</div>
 		<hr>
+
 		<div class="footer">
 			<p>&copy; Deep Shah</p>
 		</div>
 
 	</div>
-
 	<!-- /container -->
 
 	<!-- Le javascript

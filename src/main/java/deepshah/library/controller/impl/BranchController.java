@@ -80,6 +80,7 @@ public class BranchController {
 		mv.addObject("status","There are total "+String.valueOf(list.size())+" Departments in Library");
 		return mv;
 	}
+	
 	@RequestMapping(value = "/branch/onbranchdelete/{branch_id}", method = RequestMethod.GET)
 	public String deleteBranch(@PathVariable("branch_id") int branchId) throws Exception {
 		librarian_service.deleteBranch(branchId);

@@ -1,7 +1,10 @@
 package deepshah.library.dao.impl;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,8 +28,12 @@ public class BookDAOImpl implements BookDAO{
 	
 	@Override
 	@Transactional(value = "transactionManager", readOnly = false)
-	public Book update(Book book) {
-		return entityManager.merge(book);
+	public Book update(Book tobook) {
+		Book foundBook = entityManager.find(BookImpl.class,tobook.getBook_id());
+		if(foundBook != null) {
+			return entityManager.merge(tobook);
+		}
+		return null; 
 	}
 	
 	@Override
@@ -52,8 +59,29 @@ public class BookDAOImpl implements BookDAO{
 			return false;
 		return true;
 	}
+
+	@Override
+	public List<Book> getAllBooks() {
+		TypedQuery<BookImpl> query = entityManager.createNamedQuery
+		 ("fetchAllBooksQuery", BookImpl.class);
+		 List books = query.getResultList();
+		 return books;
+	}
+	
+	@Override
+	@Transactional(value = "transactionManager", readOnly = false)
+	public void remove(String bookId) {
+		Book book = entityManager.find(BookImpl.class, bookId);
+		if (book != null) {
+			entityManager.remove(book);
+		}
+	}
+
+	@Override
+	public Book findBook(String bookId) {
+		 return entityManager.find(BookImpl.class, bookId);
+	}
 	
 	
-	
-	
+		
 }

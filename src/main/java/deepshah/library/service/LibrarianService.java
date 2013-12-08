@@ -1,8 +1,10 @@
 package deepshah.library.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import deepshah.library.jspmodels.BookLoanBorrowerRelation;
+import deepshah.library.model.Book;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
@@ -67,5 +69,13 @@ public interface LibrarianService {
 	List<Borrower> fetchAllBorrower();
 
 	void deleteBorrower(String card_no);
+
+	List<Book> fetchAllBooks();
+
+	void deleteBook(String bookId);
+
+	Book searchBook(String bookId);
+
+	Book updateBook(Book book);
 	
 }

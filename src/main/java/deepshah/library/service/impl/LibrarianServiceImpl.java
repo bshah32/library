@@ -14,6 +14,7 @@ import deepshah.library.dao.BorrowerDAO;
 import deepshah.library.dao.CustomDAO;
 import deepshah.library.dao.LibraryBranchDAO;
 import deepshah.library.jspmodels.BookLoanBorrowerRelation;
+import deepshah.library.model.Book;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
@@ -192,5 +193,30 @@ public class LibrarianServiceImpl implements LibrarianService{
 	public int getMaxBranchNo() {
 		return library_branch_dao.fetchMaxBranchId();
 	}
+
+
+	@Override
+	public List<Book> fetchAllBooks() {
+		return book_dao.getAllBooks();
+	}
+
+
+	@Override
+	public void deleteBook(String bookId) {
+		book_dao.remove(bookId);
+	}
+
+
+	@Override
+	public Book searchBook(String bookId) {
+		return book_dao.findBook(bookId);
+	}
+
+
+	@Override
+	public Book updateBook(Book book) {
+		return book_dao.update(book);
+	}
+	
 	
 }

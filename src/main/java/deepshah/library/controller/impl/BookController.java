@@ -23,10 +23,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import deepshah.library.jspmodels.BookAuthorRelation;
 import deepshah.library.jspmodels.BookLoanBorrowerRelation;
+import deepshah.library.model.Book;
 import deepshah.library.model.BookLoans;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
+import deepshah.library.model.impl.BookImpl;
 import deepshah.library.model.impl.BookLoansImpl;
+import deepshah.library.model.impl.LibraryBranchImpl;
 import deepshah.library.service.LibrarianService;
 
 @Controller
@@ -228,6 +231,65 @@ public class BookController {
 				book_and_author.getBook().getTitle(), book_and_author.getAuthor().getAuthor_name());
 		ModelAndView mv = new ModelAndView("bookavailabilitylistview");
 		mv.getModelMap().addAttribute("custom",list);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/book/listallbook")
+	public ModelAndView viewAllBooks() {
+		ModelAndView mv = new ModelAndView("/book/listAllBook");
+		List<Book> list = librarian_service.fetchAllBooks();
+		mv.addObject("book_model",list);
+		mv.addObject("status","There are total "+String.valueOf(list.size())+" Books in Library");
+		return mv;
+	}
+	
+	@RequestMapping("/book/booklistview/openInPDF")
+	public ModelAndView beanToPdf() {
+		ModelAndView mv = new ModelAndView("booklistview");
+		List<Book> list = librarian_service.fetchAllBooks();
+		mv.getModelMap().addAttribute("book_model",list);
+		return mv;
+	}
+	
+	@RequestMapping(value = "/book/onbookdelete/{book_id}", method = RequestMethod.GET)
+	public String deleteBranch(@PathVariable("book_id") String bookId) throws Exception {
+		librarian_service.deleteBook(bookId);
+		return "redirect:/book/listallbook";
+	}
+	
+	@RequestMapping(value = "/book/onbookupdate/{book_id}", method = RequestMethod.GET)
+	public ModelAndView branchupdate(@PathVariable("book_id") String bookId) throws Exception{
+		Book book = librarian_service.searchBook(bookId);
+		ModelAndView mv = new ModelAndView("/book/updateBook");
+		mv.addObject("book_model",book); 
+		return mv;
+	}
+	
+	@RequestMapping(value = "/book/onupdatingbook", method = RequestMethod.POST)
+	public ModelAndView onUpdatingBook(@ModelAttribute("book_model") @Valid BookImpl book,
+			BindingResult result,Model model) {
+		System.out.println(book.getBook_id());
+		  if(result.hasErrors()){
+			 model.addAllAttributes(result.getModel());
+			 ModelAndView mv = new ModelAndView("/book/updateBook");
+			 mv.addObject("book_model",book);
+			 return mv;
+	        }
+	         
+		  ModelAndView mv = new ModelAndView("/book/updateBook");
+		  Book oldbook = librarian_service.searchBook(book.getBook_id());
+		  if(oldbook.equals(book)){
+			  mv.addObject("status","No changes to Update");
+		  } 
+		  else {
+			Book updatedbook = librarian_service.updateBook(book);
+			if(updatedbook.equals(book)){
+				mv.addObject("status","Book has been updated");	
+			}
+			else {
+				mv.addObject("status","Book has not been updated");
+			}
+		  }
 		return mv;
 	}
 	

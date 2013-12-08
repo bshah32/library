@@ -129,6 +129,9 @@ body {
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Book <b class="caret"></b></a>
 								<ul class="dropdown-menu">
+								<li><a
+										href='${pageContext.request.contextPath}/book/listallbook'>Book
+											List</a></li>
 									<li><a
 								href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
@@ -215,6 +218,12 @@ body {
 						<div class="controls">
 							<form:input path="phone"  placeholder="Phone" />
 							<font color="red"><form:errors path="phone" /> </font>
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn btn-primary" type="submit">Submit</button>
+							<button type="reset" class="btn">Reset</button>
 						</div>
 					</div>
 				</form:form>

@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import deepshah.library.model.Book;
 import deepshah.library.model.Borrower;
 import deepshah.library.model.LibraryBranch;
+import deepshah.library.model.impl.BookImpl;
 import deepshah.library.model.impl.BorrowerImpl;
 import deepshah.library.model.impl.LibraryBranchImpl;
 import deepshah.library.service.LibrarianService;
@@ -102,7 +104,33 @@ public class BorrowerController {
 		mv.addObject("borrower_model",borrower); 
 		return mv;
 	}
-	
+	@RequestMapping(value = "/borrower/onupdatingborrower", method = RequestMethod.POST)
+	public ModelAndView onUpdatingBook(@ModelAttribute("borrower_model") @Valid BorrowerImpl borrower,
+			BindingResult result,Model model) {
+		System.out.println(borrower.getCard_no());
+		  if(result.hasErrors()){
+			 model.addAllAttributes(result.getModel());
+			 ModelAndView mv = new ModelAndView("/borrower/updateBorrower");
+			 mv.addObject("borrower_model",borrower);
+			 return mv;
+	        }
+	         
+		  ModelAndView mv = new ModelAndView("/borrower/updateBorrower");
+		  Borrower oldborrower = librarian_service.searchBorrower(borrower.getCard_no());
+		  if(oldborrower.equals(borrower)){
+			  mv.addObject("status","No changes to Update");
+		  } 
+		  else {
+			Borrower updatedborrower = librarian_service.updateBorrower(borrower);
+			if(updatedborrower.equals(borrower)){
+				mv.addObject("status","Borrower has been updated");	
+			}
+			else {
+				mv.addObject("status","Borrower has not been updated");
+			}
+		  }
+		return mv;
+	}
 	@RequestMapping("/borrower/borrowerlistview/openInPDF")
 	public ModelAndView beanToPdf() {
 		ModelAndView mv = new ModelAndView("borrowerlistview");

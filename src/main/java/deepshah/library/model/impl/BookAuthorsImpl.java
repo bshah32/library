@@ -32,7 +32,7 @@ public class BookAuthorsImpl implements BookAuthors, Serializable {
 	private String author_name;
 
 	
-	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY,cascade={CascadeType.ALL})
+	@ManyToOne(targetEntity = BookImpl.class, fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", referencedColumnName = "book_id")
 	private BookImpl book;
 

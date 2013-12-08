@@ -9,4 +9,5 @@
 	<bean id="bookavailabilitylistview" class="deepshah.library.view.BookAvailabilityListView" />
 	<bean id="bookcheckoutsearchlist" class="deepshah.library.view.BookCheckoutSearchList" />
 	<bean id="borrowerlistview" class="deepshah.library.view.BorrowerListView" />
+	<bean id="booklistview" class="deepshah.library.view.BookListView" />
 </beans>
