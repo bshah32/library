@@ -128,6 +128,9 @@ body {
 								class="dropdown-toggle active" data-toggle="dropdown">Book <b
 									class="caret"></b></a>
 								<ul class="dropdown-menu">
+								<li><a
+										href='${pageContext.request.contextPath}/book/listallbook'>Book
+											List</a></li>
 									<li><a
 										href='${pageContext.request.contextPath}/book/bookavailability'>Book
 											Availability</a></li>
@@ -141,9 +144,7 @@ body {
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Borrower <b class="caret"></b></a>
 								<ul class="dropdown-menu">
-								<li><a
-										href='${pageContext.request.contextPath}/book/listallbook'>Book
-											List</a></li>
+								
 									<li><a
 										href='${pageContext.request.contextPath}/borrower/addborrower'>Add
 											Borrower</a></li>
