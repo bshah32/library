@@ -189,7 +189,7 @@ body {
 								<th>Last Name</th>
 								<th>Address</th>
 								<th>Phone</th>
-								<th>View/Delete</th>
+								<th>Update/Delete</th>
 							</tr>
 						<thead>
 						<tbody>
@@ -207,7 +207,6 @@ body {
 										href='${pageContext.request.contextPath}/borrower/onborrowerdelete/${borrowerModel.card_no}'>
 											<i class="icon-trash"></i>
 									</a></td>
-
 								</tr>
 							</c:forEach>
 						</tbody>
