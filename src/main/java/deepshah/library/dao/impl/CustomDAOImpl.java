@@ -19,16 +19,17 @@ public class CustomDAOImpl implements CustomDAO{
 	 
 	 @Override
 	 public List<Object[]> getByIdTitleAuthor(String book_id,String title,String book_author)  {
-Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch_id,r.branch_name,a.no_of_copies,a.num_out,a.num_avail "
-		+ "FROM library_branch AS r, "
-		+ "(SELECT c.book_id,c.title,c.branch_id,c.no_of_copies, COUNT(card_no) as num_out, (c.no_of_copies- COUNT(card_no)) as num_avail "
-		+ "FROM  (SELECT * FROM book NATURAL JOIN book_copies NATURAL JOIN book_authors WHERE (book_id LIKE '%"+book_id+"%') AND (title LIKE '%"+title+"%') AND (author_name LIKE '%"+book_author+"%')) as c  "
-		+ "LEFT JOIN "
-		+ "(SELECT * FROM book NATURAL JOIN book_loans NATURAL JOIN book_authors WHERE (book_id LIKE '%"+book_id+"%') AND (title LIKE '%"+title+"%') AND (author_name LIKE '%"+book_author+"%')) as b "
-		+ "ON c.branch_id = b.branch_id "
-		+ "GROUP BY c.book_id,c.branch_id) AS a "
-		+ "WHERE r.branch_id=a.branch_id "
-		+ "ORDER BY r.branch_id");
+Query query = entityManager.createNativeQuery("select Q.b_id,Q.title as title,Q.id_branch,Q.b_name as branch_name, Q.copies as no_of_copies, ifnull(R.issued,0) as num_out,  (select(no_of_copies - num_out)) as num_avail "
++ "from (select branch_id as id_branch,book_id as b_id,  count(*) as issued "
++ "from book_loans group by branch_id,book_id) as R "
++ "right outer join "
++ "(select T1.title as title,S.branch_id as id_branch,S.book_id as b_id,S.no_of_copies as copies,T.branch_name as b_name "
++ "from (select b.book_id, title "
++ "from book as b,book_authors as a "
++ "where b.book_id=a.book_id AND b.title LIKE '%"+title+"%' AND b.book_id LIKE '%"+book_id+"%' AND a.author_name LIKE '%"+book_author+"%') as T1,book_copies as S,library_branch as T "
++ "where T1.book_id = S.book_id and S.branch_id = T.branch_id "
++ "group by S.book_id, S.branch_id) as Q on Q.b_id = R.b_id and Q.id_branch = R.id_branch "
++ "ORDER BY Q.b_id,Q.id_branch");
 	List<Object[]> result = query.getResultList();
 	 return result;
 	 }
@@ -37,14 +38,18 @@ Query query = entityManager.createNativeQuery("SELECT a.book_id,a.title,r.branch
 	 
 	 @Override
 	 public int getBookAvailabilityInBranch(String ofBookId,String inBranch) {
-		 Query query = entityManager.createNativeQuery("SELECT a.num_avail "
-					+ "FROM library_branch AS r, "
-					+ "(SELECT c.title,c.branch_id,c.no_of_copies, COUNT(card_no) as num_out, (c.no_of_copies- COUNT(card_no)) as num_avail"
-					+ " FROM  (SELECT * FROM book NATURAL JOIN book_copies WHERE book_id = '"+ofBookId+"' and branch_id='"+inBranch+"') as c "
-					+ " LEFT JOIN "
-					+ "(SELECT * FROM book NATURAL JOIN book_loans WHERE book_id = '"+ofBookId+"' and branch_id='"+inBranch+"') as b "
-					+ "ON c.branch_id = b.branch_id GROUP BY c.branch_id) AS a "
-					+ "WHERE r.branch_id = a.branch_id");
+
+		 Query query = entityManager.createNativeQuery("select (select(Q.copies - ifnull(R.issued,0))) as num_avail "
+				 + "from (select branch_id as id_branch,book_id as b_id,  count(*) as issued "
+				 + "from book_loans group by branch_id,book_id) as R "
+				 + "right outer join "
+				 + "(select T1.title as title,S.branch_id as id_branch,S.book_id as b_id,S.no_of_copies as copies,T.branch_name as b_name "
+				 + "from (select b.book_id, title "
+				 + "from book as b,book_authors as a "
+				 + "where b.book_id=a.book_id AND b.book_id = '"+ofBookId+"') as T1,book_copies as S,library_branch as T "
+				 + "where T1.book_id = S.book_id and S.branch_id = T.branch_id AND S.branch_id='"+inBranch+"' "
+				 + "group by S.book_id, S.branch_id) as Q on Q.b_id = R.b_id and Q.id_branch = R.id_branch "
+				 + "ORDER BY Q.b_id,Q.id_branch");
 	 List result = query.getResultList();
 	 if(result == null)
 		 return 0;
