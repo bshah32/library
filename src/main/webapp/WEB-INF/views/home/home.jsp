@@ -168,14 +168,13 @@ body {
 			</div>
 			<!-- /.navbar -->
 		</div>
-		<h2>
-			Home
-		</h2>
-		<hr>
 		<!-- Example row of columns -->
 		<div class="row-fluid">
-			<div class="span12">
-				<p>
+			<div class="span12" align="center">
+			<br />
+			<br />
+			<iframe src="http://www.slideshare.net/slideshow/embed_code/29025201" width="597" height="486" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="https://www.slideshare.net/dsshah22/library-29025201" title="Library" target="_blank">Library</a> </strong> from <strong><a href="http://www.slideshare.net/dsshah22" target="_blank">Deep Shah</a></strong> </div>
+			<!-- 	<p>
 					<b>1) Determining Book Availability</b> <br /> Using your GUI, be
 					able to search for a book, given any combination of book_id, title,
 					and/or author_name. Your query should support substring matching.
@@ -211,7 +210,8 @@ body {
 					attempted withe same fname, lname, and address, then your system
 					should reject and return a useful error message.
 				</p>
-			</div>
+ -->
+ 			</div>
 		</div>
 		<hr>
 
