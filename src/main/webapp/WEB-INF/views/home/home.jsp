@@ -136,11 +136,11 @@ body {
 										href='${pageContext.request.contextPath}/book/bookavailability'>Book
 											Availability</a></li>
 									<li><a
-										href='${pageContext.request.contextPath}/book/bookcheckin'>Book
-											Checkin</a></li>
-									<li><a
 										href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 											Checkout</a></li>
+									<li><a
+										href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+											Checkin</a></li>
 								</ul></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown">Borrower <b class="caret"></b></a>
@@ -169,7 +169,7 @@ body {
 			<!-- /.navbar -->
 		</div>
 		<h2>
-			<c:out value="${output}"></c:out>
+			Home
 		</h2>
 		<hr>
 		<!-- Example row of columns -->

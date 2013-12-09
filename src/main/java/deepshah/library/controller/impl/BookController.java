@@ -41,7 +41,6 @@ public class BookController {
 	@RequestMapping(value = "/book/bookavailability", method = RequestMethod.GET)
 	public ModelAndView bookavailability() {
 		ModelAndView mv = new ModelAndView("book/bookAvailability");
-		mv.addObject("output", "Search Book");
 		mv.addObject("model", new BookAuthorRelation());
 		mv.addObject("status","Enter Details below");
 		return mv;
@@ -62,7 +61,6 @@ public class BookController {
 		if(book_and_author.getBook().getBook_id() == "" && book_and_author.getBook().getTitle()=="" 
 				&& book_and_author.getAuthor().getAuthor_name() == ""){
 			ModelAndView mv = new ModelAndView("book/bookAvailability");
-			mv.addObject("output", "Search Book");
 			mv.addObject("model", new BookAuthorRelation());
 			mv.addObject("status","Please enter either Book Id or Book Title or Book Author Name");
 			return mv;
@@ -76,7 +74,6 @@ public class BookController {
 			return mv;
 		}
 		ModelAndView mv = new ModelAndView("/book/bookAvailabilityList");
-		mv.addObject("output", "Listing Available Books");
 		mv.addObject("custom", list);
 		mv.addObject("status","You have fetched "+list.size()+" result in Responce");
 		return mv;
@@ -84,30 +81,27 @@ public class BookController {
 	
 
 
-	@RequestMapping(value = "/book/bookcheckin", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/bookcheckout", method = RequestMethod.GET)
 	public ModelAndView bookcheckin() {
-		ModelAndView mv = new ModelAndView("book/bookCheckin");
-		mv.addObject("output", "Check-in New Book");
+		ModelAndView mv = new ModelAndView("book/checkoutBook");
 		mv.addObject("book_loans_model", new BookLoansImpl());
 		mv.addObject("status","");
 		return mv;
 	}
 	
-	@RequestMapping(value = "/book/onBookCheckin", method = RequestMethod.POST)
+	@RequestMapping(value = "/book/onBookCheckout", method = RequestMethod.POST)
 	public ModelAndView onBookCheckin(
 			@ModelAttribute("book_loans_model") @Valid BookLoansImpl new_book,
 			BindingResult result, Model model) throws IllegalStateException,
 			IOException,EntityExistsException,EntityNotFoundException{
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
-			ModelAndView mv = new ModelAndView("book/bookCheckin");
-			mv.addObject("output", "Enter Checking Details");
+			ModelAndView mv = new ModelAndView("book/checkoutBook");
 			mv.addObject("status","Error in checkin book.Please check the information.");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView("book/bookCheckin");
+		ModelAndView mv = new ModelAndView("book/checkoutBook");
 		mv.addObject("book_loans_model", new BookLoansImpl());
-		mv.addObject("output", "Enter Checking Details");
 		
 		if(!librarian_service.bookExists(new_book.getBook_id())){
 			mv.addObject("status","Given Book Does not Exist");
@@ -140,25 +134,25 @@ public class BookController {
 			return mv;
 	}
 	
-	@RequestMapping(value = "/book/bookcheckout", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/bookcheckin", method = RequestMethod.GET)
 	public String bookcheckout() {
-		return "/book/bookCheckout";
+		return "/book/checkinBook";
 	}
 	
-	@RequestMapping(value = "/book/searcheckoutbooks/*", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/searcheckinbooks/*", method = RequestMethod.GET)
 	public ModelAndView searchCheckoutBook(HttpServletRequest request) throws Exception  {
 		String book_id = request.getParameter("bookid");
 		String card_no = request.getParameter("cardno");
 		String first_name = request.getParameter("fname");
 		String last_name = request.getParameter("lname");
 		if(book_id.equals("") && card_no.equals("") && first_name.equals("") && last_name.equals("")){
-			ModelAndView mv = new ModelAndView("/book/bookCheckout");
+			ModelAndView mv = new ModelAndView("/book/checkinBook");
 			mv.addObject("status","Enter any detail to Search Book");
 			return mv;
 		}
 		if(request.getParameter("submitbutton").equalsIgnoreCase("pdf")){
 			List<Object[]> list =librarian_service.getIssuedBook(book_id, card_no, first_name, last_name);
-			ModelAndView mv = new ModelAndView("bookcheckoutsearchlist");
+			ModelAndView mv = new ModelAndView("bookcheckinsearchlist");
 			mv.addObject("custom", list);
 			return mv;
 		}
@@ -176,35 +170,33 @@ public class BookController {
 				bookdisp.add(bs);
 		  }
 		
-		ModelAndView mv = new ModelAndView("/book/bookCheckoutList");
-		mv.addObject("output", "All Checkied In Books");
+		ModelAndView mv = new ModelAndView("/book/checkinBookList");
 		mv.addObject("book_loans_model", bookdisp);
 		return mv;
 	}
 	
-	@RequestMapping(value = "/book/onSelectedBookCheckout/{book_id}/{branch_id}/{card_no}", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/onSelectedBookCheckin/{book_id}/{branch_id}/{card_no}", method = RequestMethod.GET)
 	public String deleteanissuedbook(@PathVariable("book_id") String bookId,@PathVariable("branch_id") int branchId,
 			@PathVariable("card_no") String cardNo) throws Exception {
 		BookLoansImpl book = new BookLoansImpl(bookId, branchId, cardNo, null,null); 
 		librarian_service.checkoutOldBook(book);
-		return "redirect:/book/bookcheckout";
+		return "redirect:/book/bookcheckin";
 	}
 	
-	@RequestMapping(value = "/book/getallcheckoutbooks", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/getallcheckinbooks", method = RequestMethod.GET)
 	public ModelAndView onbookcheckout() {
 		List<BookLoans> list = librarian_service.getAllIssuedCheckedinBooks();
-		ModelAndView mv = new ModelAndView("/book/allBookCheckoutList");
-		mv.addObject("output", "All Checkied In Books");
+		ModelAndView mv = new ModelAndView("/book/allBookCheckinList");
 		mv.addObject("book_loans_model", list);
 		return mv;
 	}
 	
-	@RequestMapping(value = "/book/onBookCheckout/{book_id}/{branch_id}/{card_no}", method = RequestMethod.GET)
+	@RequestMapping(value = "/book/onBookCheckin/{book_id}/{branch_id}/{card_no}", method = RequestMethod.GET)
 	public String deleteissuedbook(@PathVariable("book_id") String bookId,@PathVariable("branch_id") int branchId,
 			@PathVariable("card_no") String cardNo) throws Exception {
 		BookLoansImpl book = new BookLoansImpl(bookId, branchId, cardNo, null,null); 
 		librarian_service.checkoutOldBook(book);
-		return "redirect:/book/bookcheckout";
+		return "redirect:/book/bookcheckin";
 	}
 	
 	@RequestMapping("book/bookavailabilitylistview/openInPDF")
@@ -221,7 +213,6 @@ public class BookController {
 		if(book_and_author.getBook().getBook_id() == "" && book_and_author.getBook().getTitle()=="" 
 				&& book_and_author.getAuthor().getAuthor_name() == ""){
 			ModelAndView mv = new ModelAndView("book/bookAvailability");
-			mv.addObject("output", "Search Book");
 			mv.addObject("model", new BookAuthorRelation());
 			mv.addObject("status","Please enter either Book Id or Book Title or Book Author Name");
 			return mv;

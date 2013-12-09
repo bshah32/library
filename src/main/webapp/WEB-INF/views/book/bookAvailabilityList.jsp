@@ -138,11 +138,11 @@ body {
 								href='${pageContext.request.contextPath}/book/bookavailability'>Book
 									Availability</a></li>
 									<li><a
-								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
-									Checkin</a></li>
-									<li><a
 								href='${pageContext.request.contextPath}/book/bookcheckout'>Book
 									Checkout</a></li>
+									<li><a
+								href='${pageContext.request.contextPath}/book/bookcheckin'>Book
+									Checkin</a></li>
 								</ul>
 							</li>
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -174,7 +174,7 @@ body {
 			<!-- /.navbar -->
 		</div>
 		<h2>
-			<c:out value="${output}"></c:out>
+			Book Availability List
 		</h2>
 		<div class="alert">
   				<button type="button" class="close" data-dismiss="alert">&times;</button>

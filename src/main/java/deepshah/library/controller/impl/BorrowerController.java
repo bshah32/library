@@ -33,7 +33,6 @@ public class BorrowerController {
 	@RequestMapping(value = "/borrower/addborrower", method = RequestMethod.GET)
 	public ModelAndView addborrower() {
 		ModelAndView mv = new ModelAndView("borrower/addBorrower");
-		mv.addObject("output", "Enter Details for Borrower");
 		BorrowerImpl bor = new BorrowerImpl();
 		int card_no = librarian_service.getMaxCardNo();
 		int next_no = card_no+1;
@@ -50,12 +49,10 @@ public class BorrowerController {
 		if (result.hasErrors()) {
 			model.addAllAttributes(result.getModel());
 			ModelAndView mv = new ModelAndView("borrower/addBorrower");
-			mv.addObject("output", "Enter Details for Borrower");
 			mv.addObject("status","Error in checkin book.Please check the information.");
 			return mv;
 		}
 		ModelAndView mv = new ModelAndView("/borrower/addBorrower");
-		mv.addObject("output", "Enter Details for Borrower");
 		Borrower b = librarian_service.searchBorrower(borrower.getCard_no());
 		if(b != null){
 			mv.addObject("status","Borrower with same Id already exists");
