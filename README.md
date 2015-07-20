@@ -1,4 +1,4 @@
-Library
+Library [https://travis-ci.org/deepshah22/library.svg?branch=master]
 =======
 
 
