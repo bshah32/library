@@ -1,5 +1,3 @@
-Library [https://travis-ci.org/deepshah22/library.svg?branch=master]
+Library 
 =======
-
-
-Working Project with dummy values : http://library.dsshah22.cloudbees.net
+This is Library Magement Project.
